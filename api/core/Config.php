@@ -14,6 +14,7 @@ class Config {
     const SESSION_EXPIRES = 15; # The value is in minutes
     const MAX_REQUESTS_SECOND = 1; # The treshold for requests in seconds
     const FORCE_HTTPS = false;
+    const TOKEN_SECRET = "D9G+c>/mfR}NaMLtra-rS+S^A=2D'\g";
 
     # Database configuration
     const DB_HOST = "localhost";
