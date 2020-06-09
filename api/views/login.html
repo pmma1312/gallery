@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/base.css">
+</head>
+<body class="bg-dark">
+    <div class="container-fluid" id="root">
+        <div class="row">
+            <div class="col-12">
+                <navbar></navbar>
+            </div>
+            <div class="col-12">
+                <div class="card bg-dark mx-auto w-50 mt-3">
+                    <div class="card-header">
+                        <h1 class="display-4">Login</h1>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="username">Username:</label>
+                                <input type="text" name="username" class="form-control bg-dark" placeholder="username..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password:</label>
+                                <input type="password" name="password" class="form-control bg-dark" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" required>
+                            </div>
+                            <input type="submit" value="Login" class="form-control bg-dark w-25">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/public/js/lib/vue.js"></script>
+    <script src="/public/js/index.js" type="module"></script>
+</body>
+</html>

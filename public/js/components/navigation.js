@@ -19,6 +19,11 @@ export default {
                     route: "/images",
                     icon: "/public/img/icons/images.png"
                 },
+                {
+                    name: "Panel",
+                    route: "/panel",
+                    icon: "/public/img/icons/panel.png"
+                },
             ]
         }
     },

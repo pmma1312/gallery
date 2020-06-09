@@ -35,13 +35,7 @@ const app = new Vue({
                 created_at: "09.06.2020",
                 username: "testUser",
                 thumbnail: "/public/img/uploads/example.jpg"
-            },
-            {
-                name: "test6",
-                created_at: "09.06.2020",
-                username: "testUser",
-                thumbnail: "/public/img/uploads/example.jpg"
-            },
+            }
         ]
     },
     components: {
