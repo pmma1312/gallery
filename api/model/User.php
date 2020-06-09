@@ -1,5 +1,8 @@
 <?php
 
+use ReallySimpleJWT\Token;
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+
 class User {
 
     private $id;
@@ -28,7 +31,7 @@ class User {
         }
 
         $result = $this->conn->query($query);
-
+        
         if($result->num_rows > 0) {
             $result = $result->fetch_array(MYSQLI_ASSOC);
             $this->id = $result['id'];
@@ -112,7 +115,16 @@ class User {
     }
 
     public function getToken() : string {
-        return "HSHFHFHFHFH";
+        $payload = [
+            'iat' => time(),
+            'uid' => $this->id,
+            'exp' => time() + (60 * 30), // is valid for 30 min
+            'iss' => Config::HOST_NAME
+        ];
+        
+        $token = Token::customPayload($payload, Config::TOKEN_SECRET);
+
+        return $token;
     }
 
 }

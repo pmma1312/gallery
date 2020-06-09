@@ -22,6 +22,10 @@ Route::get("/login", function() {
     View::html("views/login.html");
 });
 
+Route::get("/logout", function() {
+    Auth::logout();
+}, "Authentication::isAuthenticated");
+
 Route::get("/register", function() {
     View::html("views/register.html");
 });

@@ -1,5 +1,8 @@
 <?php
 
+use ReallySimpleJWT\Token;
+require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+
 class Auth {
 
     public static function getToken() {
@@ -75,14 +78,9 @@ class Auth {
     }
 
     public static function logout() {
-        $response = DefaultHandler::unauthorizedAccess();
-
-        if(Auth::isAuthorized()) {
-            Cookie::removeCookie("token", "/");
-            $response = DefaultHandler::responseOk("You have successfully been logged out.");
-        }
-
-        View::json($response);
+        Cookie::removeCookie("token", "/");
+        header("Location: /", 200);
+        die();
     }
 
 }

@@ -4,7 +4,7 @@ class Authentication {
 
     public static function isAuthenticated($next) {
 
-        if(false) {
+        if(Auth::isAuthorized()) {
             $next();
         } else {
             header("Location: /login", 401);
