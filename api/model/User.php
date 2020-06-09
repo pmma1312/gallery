@@ -50,13 +50,28 @@ class User {
         }
 
         if(strlen($this->password) < 8) {
-            $isValid = false;
-            array_push($this->error, "Your password has to be atleast 8 characters long.");
+            array_push($this->errors, "The min. length for your password is 8 characters!");
+            $dataIsValid = false;
         }
 
         if(strlen($this->password) > 64) {
-            $isValid = false;
-            array_push($this->error, "Your password can't be longer than 64 characters.");
+            array_push($this->errors, "The max. length for your password is 64 characters!");
+            $dataIsValid = false;
+        }
+
+        if(!preg_match("#[0-9]+#", $this->password ) ) {
+            array_push($this->errors, "Password must include at least one number!");
+            $dataIsValid = false;
+        }
+
+        if(!preg_match("#[A-Z]+#", $this->password ) ) {
+            array_push($this->errors, "Password must include at least one uppercase character!");
+            $dataIsValid = false;
+        }
+            
+        if(!preg_match("#\W+#", $this->password ) ) {
+            array_push($this->errors, "Password must include at least one special character!");
+            $dataIsValid = false;
         }
 
         return $isValid;
@@ -82,6 +97,10 @@ class User {
         }
 
         return $isSaved;
+    }
+
+    public function verifyPassword() : bool {
+        return password_verify($this->password, $this->hash);
     }
 
     public function exists() : bool {

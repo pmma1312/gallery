@@ -23,6 +23,9 @@ spl_autoload_register(function($className) {
         case file_exists(sprintf("%s/api/middleware/%s.php", $_SERVER['DOCUMENT_ROOT'], $className)):
             require_once(sprintf("%s/api/middleware/%s.php", $_SERVER['DOCUMENT_ROOT'], $className));
             break;
+        case file_exists(sprintf("%s/api/model/%s.php", $_SERVER['DOCUMENT_ROOT'], $className)):
+            require_once(sprintf("%s/api/model/%s.php", $_SERVER['DOCUMENT_ROOT'], $className));
+            break;
         default:
             die("Failed to load class " . $className);
             break;
