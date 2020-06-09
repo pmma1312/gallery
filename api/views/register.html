@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+    <title>Register</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css">
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/css/base.css">
@@ -18,22 +18,24 @@
             <div class="col-12">
                 <div class="card bg-dark mx-auto w-50 mt-3">
                     <div class="card-header">
-                        <h1 class="display-4">Login</h1>
+                        <h1 class="display-4">Register</h1>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form @submit="register">
                             <div class="form-group">
                                 <label for="username">Username:</label>
-                                <input type="text" name="username" class="form-control bg-dark" placeholder="username..." required>
+                                <input type="text" name="username" class="form-control bg-dark" placeholder="username..." v-model="username" required>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password:</label>
-                                <input type="password" name="password" class="form-control bg-dark" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" required>
+                                <input type="password" name="password" class="form-control bg-dark" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" v-model="password" required>
                             </div>
-                            <p class="text-muted">
-                                Not registered yet? <a href="/register">Register now!</a>
-                            </p>
-                            <input type="submit" value="Login" class="form-control bg-dark w-25">
+                            <div class="form-group">
+                                <label for="password">Confirm Password:</label>
+                                <input type="password" name="password" class="form-control bg-dark" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" v-model="passwordConfirm" required>
+                            </div>
+                            <a href="/login" class="d-inline-block mb-2">Back to Login!</a>
+                            <input type="submit" value="Register" class="form-control bg-dark w-25">
                         </form>
                     </div>
                 </div>
@@ -43,6 +45,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
     <script src="/public/js/lib/axios.min.js"></script>
     <script src="/public/js/lib/vue.js"></script>
-    <script src="/public/js/index.js" type="module"></script>
+    <script src="/public/js/register.js" type="module"></script>
 </body>
 </html>

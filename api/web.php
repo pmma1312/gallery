@@ -22,6 +22,10 @@ Route::get("/login", function() {
     View::html("views/login.html");
 });
 
+Route::get("/register", function() {
+    View::html("views/register.html");
+});
+
 Route::get("/images", function() {
     View::html("views/images.html");
 });
