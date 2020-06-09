@@ -1,0 +1,20 @@
+.icon-navbar {
+    width: 30px;
+    height: 30px;
+    margin-left: 8px;
+    margin-right: 8px;
+    transition: filter .3s ease-out;
+}
+
+.icon-navbar:hover {
+    filter: invert(100%);
+    transition: filter .3s ease-in;
+}
+
+.navbar-dark {
+    background-color: rgb(36, 40, 44);
+}
+
+.active {
+    opacity: .5;
+}
