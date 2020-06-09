@@ -30,10 +30,10 @@ export default {
     },
     template: `
         <div class="navbar navbar-expand-lg navbar-dark">
-            <a class="navbar-brand">Gallery</a>
+            <a class="navbar-brand">pGallery</a>
             <div class="navbar">
                 <ul class="navbar-nav">
-                    <a :href="site.route" class="nav item nav-link" v-for="site in sites" :title="site.name" v-bind:class="{ active: activeSite == site.route }">
+                    <a :href="(site.route != activeSite) ? site.route : '#'" class="nav item nav-link" v-for="site in sites" :title="site.name" v-bind:class="{ active: activeSite == site.route }">
                         <img :src="site.icon" class="icon-navbar">
                     </a>
                 </ul>

@@ -1,0 +1,11 @@
+DROP DATABASE IF EXISTS pGallery;
+CREATE DATABASE pGallery;
+USE pGallery;
+
+CREATE TABLE user (
+    id INT NOT NULL AUTO_INCREMENT,
+    username VARCHAR(16) NOT NULL,
+    password VARCHAR(256) NOT NULL,
+    registered TIMESTAMP NOT NULL,
+    PRIMARY KEY(id)
+);
