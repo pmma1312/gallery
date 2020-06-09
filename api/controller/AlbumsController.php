@@ -17,7 +17,7 @@ class AlbumsController {
         if(is_numeric($limit) && is_numeric($offset)) {
             $conn = Database::getInstance()->getConn();
 
-            $query = "SELECT album.name, DATE_FORMAT(album.created_at, '%d.%M.%Y') AS created_at, user.username FROM album JOIN user ON album.user_id = user.id WHERE album.deleted = 0 LIMIT " . $limit . " OFFSET " . $offset;
+            $query = "SELECT album.name, DATE_FORMAT(album.created_at, '%d.%M.%Y') AS created_at, user.username, image.path AS thumbnail FROM album JOIN user ON album.user_id = user.id JOIN image ON album.thumbnail_id = image.id WHERE album.deleted = 0 LIMIT " . $limit . " OFFSET " . $offset;
 
             $result = $conn->query($query);
 

@@ -24,11 +24,14 @@ CREATE TABLE image (
 CREATE TABLE album (
     id INT NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
+    thumbnail_id INT NOT NULL,
     name VARCHAR(24) NOT NULL,
     deleted TINYINT(1) DEFAULT 0 NOT NULL,
     created_at TIMESTAMP NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(user_id) REFERENCES user(id)
+    ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY(thumbnail_id) REFERENCES image(id)
     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 

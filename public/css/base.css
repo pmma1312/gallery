@@ -1,3 +1,7 @@
+* {
+    color: white !important;
+}
+
 .icon-navbar {
     width: 30px;
     height: 30px;
@@ -17,4 +21,8 @@
 
 .active {
     opacity: .5;
+}
+
+.d-inline-block {
+    display: inline-block;
 }

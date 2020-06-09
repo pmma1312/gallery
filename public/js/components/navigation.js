@@ -29,7 +29,7 @@ export default {
         }
     },
     template: `
-        <div class="navbar navbar-expand-lg navbar-dark">
+        <div class="navbar navbar-expand-lg navbar-dark mt-3 rounded">
             <a class="navbar-brand">pGallery</a>
             <div class="navbar">
                 <ul class="navbar-nav">

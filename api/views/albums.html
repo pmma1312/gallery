@@ -8,10 +8,59 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css">
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/css/base.css">
+    <style>
+        .img-thumbnail {
+            background-color: rgba(0,0,0,0);
+            border: 0px;
+            padding: 0px;
+        }
+
+        .my-col {
+            flex: auto !important;
+            width: auto !important;
+            min-width: 33.33333% !important;
+            max-width: 100% !important;
+            padding: 1rem;
+        }
+    </style>
 </head>
 <body class="bg-dark">
-    <div class="container-fluid m-0 p-0" id="root">
-        <navbar></navbar>
+    <div class="container-fluid" id="root">
+        <div class="row">
+            <div class="col-12">
+                <navbar></navbar>
+            </div>
+            <div class="col-12">
+                <h1 class="display-4 mt-3">Albums</h1>
+            </div>
+            <div class="col-12">
+                <div class="row">
+                    <div class="my-col" v-for="album in albums">
+                        <div class="card bg-dark">
+                            <div class="card-header">
+                                <a :href="`/album/${album.name}`">
+                                    <h3>{{ album.name }}</h3>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <a :href="`/album/${album.name}`">
+                                            <img :src="album.thumbnail" alt="thumbnail" class="img-thumbnail" style="max-width: 250px;">
+                                        </a>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="d-inline-block m-0 mt-2 text-muted">
+                                            Created at <span class="text-light">{{ album.created_at }}</span> by <span class="text-light">{{ album.username }}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
     <script src="/public/js/lib/axios.min.js"></script>
