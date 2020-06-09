@@ -10,9 +10,9 @@ export default {
                     icon: "/public/img/icons/home.png"
                 },
                 {
-                    name: "Gallery",
-                    route: "/gallery",
-                    icon: "/public/img/icons/gallery.png"
+                    name: "Albums",
+                    route: "/albums",
+                    icon: "/public/img/icons/albums.png"
                 },
                 {
                     name: "Images",

@@ -6,8 +6,8 @@ Route::get("/", function() {
     View::html("views/index.html");
 });
 
-Route::get("/gallery", function() {
-    View::html("views/gallery.html");
+Route::get("/albums", function() {
+    AlbumsController::view();
 });
 
 Route::get("/images", function() {

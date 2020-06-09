@@ -2,10 +2,9 @@
 
 include("autoloader.php");
 
-$session = Session::getInstance();
-
-Route::all("/api/", function(){
-    return DefaultPage::json();
+// /api/albums/{limit}/{offset}
+Route::get("/api/albums/([0-9]+)/([0-9]+)", function() {
+    AlbumsController::loadAlbumsLimit();
 });
 
 Route::get("/api/middleware/test", function() {
