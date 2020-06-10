@@ -48,7 +48,7 @@ const app = new Vue({
             if(this.noNewData < 4) {
                 axios.get(`/api/albums/${this.limit}/${this.offset}`)
                 .then(response => {
-                    if(response.data.data.length > 0) {
+                    if(response.data.data) {
                         response.data.data.forEach(element => {
                             this.albums.push(element);
                         });

@@ -30,3 +30,18 @@
 .d-inline-block {
     display: inline-block;
 }
+
+.my-col {
+    flex: auto !important;
+    width: auto !important;
+    min-width: 25% !important;
+    max-width: 100% !important;
+    padding: 1rem;
+}
+
+.img-thumbnail {
+    background-color: rgba(0,0,0,0);
+    border: 0px;
+    padding: 0px;
+    max-width: 250px;
+}
