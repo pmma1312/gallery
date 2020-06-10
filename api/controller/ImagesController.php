@@ -30,7 +30,7 @@ class ImagesController {
             } else {
                 array_push($errors, implode("\n", $image->getErrors()));
             }
-
+            
             $response = DefaultHandler::responseOk("Uploaded your files!", [
                 "successful" =>  $successful,
                 "errors" => $errors,

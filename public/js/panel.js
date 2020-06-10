@@ -33,7 +33,18 @@ const app = new Vue({
                 }
     
                 axios.post("/api/files/upload", formData, {
-                    headers: { 'Content-Type': 'multipart/form-data' }
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                    onUploadProgress: (e) => {
+                        Swal.fire({
+                            title: '',
+                            html: `
+                            <img src='/public/img/icons/loading.gif' style='width: 128px; height: auto;'>
+                            <p>Please wait while we upload your images...</p>
+                            `,
+                            showConfirmButton: false,
+                            allowOutsideClick: false
+                        });
+                    }
                 })
                 .then(response => {
                     if(response.data.data.error && response.data.data.error > 0) {
@@ -52,7 +63,6 @@ const app = new Vue({
 
                     // Prepend fresh uploaded images to images array
                     if(response.data.data.images) {
-                        console.log(response.data.data);
                         this.images = response.data.data.images.concat(this.images);
                     }
 
@@ -78,17 +88,28 @@ const app = new Vue({
             }
         },
         deleteImage(id) {
-            axios.delete(`/api/image/${id}`)
-            .then(response => {
-                this.images = this.images.filter(item => item.id != id);
-            })
-            .catch(error => {
-                if(error.response) {
-                    Swal.fire(
-                        "Error!",
-                        error.response.data.message,
-                        "error"
-                    );
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Your image will forever be lost.",
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No don't"
+            }).then((result) => {
+                if(result.value) {
+                    axios.delete(`/api/image/${id}`)
+                    .then(response => {
+                        this.images = this.images.filter(item => item.id != id);
+                    })
+                    .catch(error => {
+                        if(error.response) {
+                            Swal.fire(
+                                "Error!",
+                                error.response.data.message,
+                                "error"
+                            );
+                        }
+                    });
                 }
             });
         }
