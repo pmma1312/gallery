@@ -12,11 +12,19 @@ class ImagesController {
 
         $files = self::restructureFilesArray($_FILES['files']);
 
+        $images = [];
+
         foreach($files as $file) {
             $image = new Image($file, $user_id);
 
             if($image->validate()) {
                 if($image->save()) {
+                    array_push($images, [
+                        "id" => $image->getId(),
+                        "path" => $image->getPath(),
+                        "uploaded_at" => $image->getUploadedAt()
+                    ]);
+
                     $successful++;
                 }
             } else {
@@ -25,7 +33,8 @@ class ImagesController {
 
             $response = DefaultHandler::responseOk("Uploaded your files!", [
                 "successful" =>  $successful,
-                "errors" => $errors
+                "errors" => $errors,
+                "images" => $images
             ]);
         }
 

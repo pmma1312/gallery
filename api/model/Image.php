@@ -6,6 +6,8 @@ class Image {
     private $id;
     private $user_id;
     private $file;
+    private $path;
+    private $uploaded_at;
     private $error;
 
     public function __construct(array $file, int $user_id) {
@@ -45,6 +47,9 @@ class Image {
 
             if($this->conn->query($query)) {
                 $this->id = $this->conn->insert_id;
+                $this->path = $filepath;
+                $this->uploaded_at = date("d.m.Y");
+
                 $isSaved = true;
             }
         }
@@ -54,6 +59,18 @@ class Image {
 
     public function getErrors() : array {
         return $this->errors;
+    }
+
+    public function getPath() : string {
+        return $this->path;
+    }
+
+    public function getUploadedAt() : string {
+        return $this->uploaded_at;
+    }
+
+    public function getId() : int {
+        return $this->id;
     }
 
 }

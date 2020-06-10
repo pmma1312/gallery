@@ -45,3 +45,7 @@
     padding: 0px;
     max-width: 250px;
 }
+
+.img-expand:hover {
+    cursor: pointer;
+}
