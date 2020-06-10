@@ -27,6 +27,26 @@
             opacity: 0;
             transform: translateY(100px);
         }
+
+        .my-images {
+            max-height: 700px;
+            overflow-y: scroll;
+        }
+
+        .my-images::-webkit-scrollbar {
+            width: .8em;
+        }
+
+        .my-images::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.096);
+            border-bottom-right-radius: 6px;
+        }
+
+        .my-images::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.219);
+            outline: 1px solid black;
+            border-bottom-right-radius: .25rem;
+        }
     </style>
 </head>
 <body class="bg-dark">
@@ -76,7 +96,7 @@
                                     <div class="card-header">
                                         <h4>My Images</h4>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-body my-images">
                                         <transition-group name="fade" tag="div" class="row d-flex">
                                             <div class="my-col" v-for="image in images" v-bind:key="image.id">
                                                 <div class="card bg-dark h-100">
