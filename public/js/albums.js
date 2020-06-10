@@ -10,31 +10,31 @@ const app = new Vue({
                 name: "test",
                 created_at: "09.06.2020",
                 username: "testUser",
-                thumbnail: "/public/img/uploads/example.jpg"
+                thumbnail: "example.jpg"
             },
             {
                 name: "test2",
                 created_at: "09.06.2020",
                 username: "testUser",
-                thumbnail: "/public/img/uploads/example.jpg"
+                thumbnail: "example.jpg"
             },
             {
                 name: "test3",
                 created_at: "09.06.2020",
                 username: "testUser",
-                thumbnail: "/public/img/uploads/example.jpg"
+                thumbnail: "example.jpg"
             },
             {
                 name: "test4",
                 created_at: "09.06.2020",
                 username: "testUser",
-                thumbnail: "/public/img/uploads/example.jpg"
+                thumbnail: "example.jpg"
             },
             {
                 name: "test5",
                 created_at: "09.06.2020",
                 username: "testUser",
-                thumbnail: "/public/img/uploads/example.jpg"
+                thumbnail: "example.jpg"
             }
         ],
         noNewData: 0
@@ -50,13 +50,13 @@ const app = new Vue({
                 .then(response => {
                     if(response.data.data.length > 0) {
                         response.data.data.forEach(element => {
-                            element.thumbnail = "/public/img/uploads/" + element.thumbnail;
                             this.albums.push(element);
                         });
     
                         this.offset += this.limit;
                         this.noNewData = 0;
                     } else {
+                        console.log(this.noNewData);
                         this.noNewData++;
                     }
                 })
@@ -77,7 +77,7 @@ const app = new Vue({
             
                 if (bottomOfWindow) {
                     if(!this.isLoading) {
-                        this.loadUrls();
+                        this.loadAlbums();
                     }
                 }
             }
