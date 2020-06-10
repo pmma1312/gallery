@@ -23,4 +23,8 @@ Route::post("/api/files/upload", function() {
     ImagesController::uploadImages();
 }, "Authentication::isAuthenticatedJson");
 
+Route::delete("/api/image/([0-9]+)", function() {
+    ImagesController::deleteImage();
+}, "Authentication::isAuthenticatedJson");
+
 ?>

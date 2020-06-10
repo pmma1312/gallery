@@ -66,6 +66,15 @@ const app = new Vue({
 
                 e.target.reset();
             }
+        },
+        deleteImage(id) {
+            axios.delete(`/api/image/${id}`)
+            .then(response => {
+                this.images = this.images.filter(item => item.id != id);
+            })
+            .catch(error => {
+                console.log(error);
+            });
         }
     },
     mounted() {
