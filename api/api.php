@@ -15,8 +15,8 @@ Route::post("/api/auth", function() {
     UserController::login();
 });
 
-Route::get("/api/middleware/test", function() {
-    View::json(DefaultHandler::responseOk("Middleware is working"));
-}, "Test::exampleMiddleware");
+Route::post("/api/files/upload", function() {
+    ImagesController::uploadImages();
+}, "Authentication::isAuthenticatedJson");
 
 ?>

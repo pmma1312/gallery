@@ -3,6 +3,7 @@ export default {
     data: function() {
         return {
             activeSite: this.getActiveSite(),
+            isLoggedIn: this.getIsLoggedIn(),
             sites: [
                 {
                     name: "Home",
@@ -34,8 +35,7 @@ export default {
                     icon: "/public/img/icons/logout.png",
                     auth: true
                 }
-            ],
-            isLoggedIn: this.getIsLoggedIn()
+            ]
         }
     },
     methods:  {
@@ -62,8 +62,12 @@ export default {
             <a class="navbar-brand">pGallery</a>
             <div class="navbar">
                 <ul class="navbar-nav">
-                    <a :href="(site.route != activeSite) ? site.route : '#'" class="nav item nav-link" v-for="site in sites" :title="site.name" v-bind:class="{ active: activeSite == site.route }" v-if="isLoggedIn || !site.auth">
-                        <img :src="site.icon" class="icon-navbar">
+                    <a v-for="site in sites" 
+                       v-if="isLoggedIn || !site.auth"
+                       :href="(site.route != activeSite) ? site.route : '#'"  
+                       :title="site.name" class="nav item nav-link">
+                        <img :src="site.icon" class="icon-navbar"
+                             :class="{ active: activeSite == site.route }" >
                     </a>
                 </ul>
             </div>

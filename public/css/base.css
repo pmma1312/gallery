@@ -23,6 +23,10 @@
     opacity: .5;
 }
 
+.active:hover {
+    filter: invert(0%) !important;
+}
+
 .d-inline-block {
     display: inline-block;
 }

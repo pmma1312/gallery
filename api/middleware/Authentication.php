@@ -13,6 +13,16 @@ class Authentication {
 
     }
 
+    public static function isAuthenticatedJson($next) {
+
+        if(Auth::isAuthorized()) {
+            $next();
+        } else {
+            View::json(DefaultHandler::unauthorizedAccess());
+        }
+
+    }
+
 }
 
 ?>

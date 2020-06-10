@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Panel</title>
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css">
     <link rel="stylesheet" href="/public/css/base.css">
 </head>
 <body class="bg-dark">
@@ -15,11 +16,60 @@
                 <navbar></navbar>
             </div>
             <div class="col-12">
-                <h1 class="display-4">Panel</h1>
+                <h1 class="display-4 mt-3">Panel</h1>
+            </div>
+            <div class="col-12">
+                <div class="card mt-3 bg-dark">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <div class="card bg-dark m-2">
+                                    <div class="card-header">
+                                        <h4>Upload Images</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form @submit="uploadFiles">
+                                            <div class="form-group">
+                                                <label for="files">Files:</label>
+                                                <input class="form-control bg-dark text-white p-1" type="file" name="file" ref="files" multiple="multiple" accept="image/jpeg,image/x-png,image/gif">
+                                            </div>
+                                            <p class="text-muted m-0 mb-2">
+                                                Please don't upload more than 10 files per upload.
+                                            </p>
+                                            <input type="submit" value="Upload" class="form-control bg-dark text-white">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="card bg-dark m-2">
+                                    <div class="card-header">
+                                        <h4>My Images</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="card bg-dark m-2">
+                                    <div class="card-header">
+                                        <h4>My Images</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
+    <script src="/public/js/lib/axios.min.js"></script>
     <script src="/public/js/lib/vue.js"></script>
-    <script src="/public/js/index.js" type="module"></script>
+    <script src="/public/js/panel.js" type="module"></script>
 </body>
 </html>
