@@ -1,0 +1,44 @@
+.album-modal-col {
+    flex: auto !important;
+    width: auto !important;
+    min-width: 20% !important;
+    max-width: 100% !important;
+    padding: .6rem;
+}
+
+.img-album-sm {
+    width: auto;
+    height: auto;
+    max-height: 150px;
+    max-width: 100%;
+}
+
+.image-selection {
+    height: 700px !important;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.5);   
+    border: 1px solid white;
+    border-radius: .25rem;
+}
+
+.album-checkbox {
+    margin-bottom: 8px;
+    display: block;
+    float: right;
+    clear: right;
+}
+
+.image-selection::-webkit-scrollbar {
+    width: .8em;
+}
+
+.image-selection::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.096);
+    border-bottom-right-radius: 6px;
+}
+
+.image-selection::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.219);
+    outline: 1px solid black;
+    border-bottom-right-radius: .25rem;
+}

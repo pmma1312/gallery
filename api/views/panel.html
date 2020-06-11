@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css">
     <link rel="stylesheet" href="/public/css/base.css">
     <link rel="stylesheet" href="/public/css/modal.css">
+    <link rel="stylesheet" href="/public/css/albummodal.css">
     <style>
         .icon-delete {
             width: 32px; 
@@ -98,7 +99,7 @@
                                 <div class="card flex-fill bg-dark m-2">
                                     <div class="card-header">
                                         <h4 class="d-inline">My Albums</h4>
-                                        <button class="d-inline-block btn btn-secondary float-right">New Album</button>
+                                        <button class="d-inline-block btn btn-secondary float-right" @click="showAlbumModal">New Album</button>
                                     </div>
                                     <div class="card-body my-albums">
                                         
@@ -142,6 +143,26 @@
             </div>
             <div class="col-12">
                 <modal ref="modal"></modal>
+                <albummodal ref="albummodal">
+                    <template v-slot:additional>
+                        <div class="col-12">
+                            <h1>Create a new album</h1>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="name">Album Name:</label>
+                                <input type="text" name="name" v-model="albumName" class="form-control bg-dark text-light">
+                            </div>
+                        </div>
+                    </template>
+                    <template v-slot:below>
+                        <div class="col-12">
+                            <button class="btn btn-secondary" @click="createAlbum">
+                                Create Album
+                            </button>
+                        </div>
+                    </template>
+                </albummodal>
             </div>
         </div>
     </div>

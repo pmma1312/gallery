@@ -7,6 +7,20 @@ Route::get("/api/albums/([0-9]+)/([0-9]+)", function() {
     AlbumsController::loadAlbumsLimit();
 });
 
+Route::post("/api/user/create", function() {
+    UserController::create();
+});
+
+Route::post("/api/auth", function() {
+    UserController::login();
+});
+
+/*
+ *
+ * Auth Routes
+ * 
+ */
+
 Route::get("/api/user/images", function() {
     ImagesController::listImagesForUser();
 }, "Authentication::isAuthenticatedJson");
@@ -18,19 +32,11 @@ Route::get("/api/user/images/([0-9]+)/([0-9]+)", function() {
 
 Route::get("/api/user/albums", function() {
     AlbumsController::loadUserAlbums();
-});
+}, "Authentication::isAuthenticatedJson");
 
 Route::post("/api/album/create", function() {
     AlbumController::create();
-});
-
-Route::post("/api/user/create", function() {
-    UserController::create();
-});
-
-Route::post("/api/auth", function() {
-    UserController::login();
-});
+}, "Authentication::isAuthenticatedJson");
 
 Route::post("/api/files/upload", function() {
     ImagesController::uploadImages();

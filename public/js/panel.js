@@ -1,5 +1,6 @@
 import navbar from './components/navigation.js';
 import modal from './components/modal.js';
+import albummodal from './components/album_modal.js';
 
 const app = new Vue({
     el: "#root",
@@ -9,11 +10,13 @@ const app = new Vue({
         limit: 15,
         offset: 0,
         noNewData: 0,
-        isLoading: false
+        isLoading: false,
+        albumName: ""
     },
     components: {
         navbar,
-        modal
+        modal,
+        albummodal
     },
     methods: {
         loadImages() {
@@ -46,6 +49,69 @@ const app = new Vue({
                 }
             })
             .catch(error => { console.log(errror) });
+        },
+        createAlbum() {
+            let ids = [];
+
+            if(!this.albumName) {
+                Swal.fire(
+                    "Error!",
+                    "Please enter an album name!",
+                    "error"
+                );
+                return;
+            }
+
+            if(!this.$refs.albummodal.thumbnail) {
+                Swal.fire(
+                    "Error!",
+                    "Please select a thumbnail!",
+                    "error"
+                );
+                return;
+            }
+
+            for(let i = 0; i < this.$refs.albummodal.checkBoxes.length; i++) {
+                if(this.$refs.albummodal.checkBoxes[i]) {
+                    ids.push(i);
+                }
+            }
+
+
+            let data = JSON.stringify({
+                "image_ids": ids,
+                "name": this.albumName,
+                "thumbnail": this.$refs.albummodal.thumbnail
+            });
+
+            let formData = new FormData();
+            formData.set("json", data);
+
+            axios.post("/api/album/create", formData)
+            .then(response => {
+                Swal.fire(
+                    "Success!",
+                    "Your album has been created!",
+                    "success"
+                );
+            })
+            .catch(error => {
+                if(error.response) {
+                    if(!error.response.data.data) {
+                        Swal.fire(
+                            "Error!",
+                            error.response.data.message,
+                            "error"
+                        );
+                    } else {
+                        Swal.fire(
+                            "Error!",
+                            error.response.data.data.join("\n"),
+                            "error"
+                        );
+                    }
+                }
+            });
         },
         uploadFiles(e) {
             e.preventDefault();
@@ -146,6 +212,9 @@ const app = new Vue({
                     this.loadImages();
                 }
             }
+        },
+        showAlbumModal() {
+            this.$refs.albummodal.showModal();
         }
     },
     mounted() {

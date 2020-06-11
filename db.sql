@@ -38,13 +38,10 @@ CREATE TABLE album (
 CREATE TABLE image_to_album (
     album_id INT NOT NULL,
     image_id INT NOT NULL,
-    user_id INT NOT NULL,
     PRIMARY KEY(album_id, image_id),
     FOREIGN KEY(album_id) REFERENCES album(id)
     ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY(image_id) REFERENCES image(id)
-    ON DELETE RESTRICT ON UPDATE CASCADE,
-    FOREIGN KEY(user_id) REFERENCES user(id)
     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
