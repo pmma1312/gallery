@@ -5,6 +5,9 @@ const app = new Vue({
     el: "#root",
     data: {
         images: [],
+        limit: 15,
+        offset: 0,
+        noNewData: 0
     },
     components: {
         navbar,
@@ -12,15 +15,22 @@ const app = new Vue({
     },
     methods: {
         loadImages() {
-            axios.get("/api/user/images")
-            .then(response => {
-                if(response.data.data) {
-                    this.images = response.data.data;
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
+            if(this.noNewData < 3) {
+                axios.get(`/api/user/images/${this.limit}/${this.offset}`)
+                .then(response => {
+                    if(response.data.data) {
+                        this.images = this.images.concat(response.data.data);
+
+                        this.offset += this.limit;
+                        this.noNewData = 0;
+                    } else {
+                        this.noNewData++;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+            }
         },
         uploadFiles(e) {
             e.preventDefault();
@@ -112,9 +122,23 @@ const app = new Vue({
                     });
                 }
             });
+        },
+        infinityScroll() {
+            this.$refs.imagesContainer.onscroll = () => {
+                let bottomOfWindow = this.$refs.imagesContainer.scrollTop + this.$refs.imagesContainer.clientHeight ===  this.$refs.imagesContainer.scrollHeight;
+            
+                console.log(this.$refs.imagesContainer.scrollTop);
+                console.log(this.$refs.imagesContainer.clientHeight);
+                console.log(this.$refs.imagesContainer.scrollHeight);
+
+                if (bottomOfWindow) {
+                    this.loadImages();
+                }
+            }
         }
     },
     mounted() {
         this.loadImages();
+        this.infinityScroll();
     }
 });

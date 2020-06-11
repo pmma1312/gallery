@@ -45,7 +45,7 @@ const app = new Vue({
     methods: {
         loadAlbums() {
             // Check if we received new data on the latest requests, else abort it
-            if(this.noNewData < 4) {
+            if(this.noNewData < 3) {
                 axios.get(`/api/albums/${this.limit}/${this.offset}`)
                 .then(response => {
                     if(response.data.data) {
@@ -56,7 +56,6 @@ const app = new Vue({
                         this.offset += this.limit;
                         this.noNewData = 0;
                     } else {
-                        console.log(this.noNewData);
                         this.noNewData++;
                     }
                 })
@@ -76,9 +75,7 @@ const app = new Vue({
                 let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
             
                 if (bottomOfWindow) {
-                    if(!this.isLoading) {
-                        this.loadAlbums();
-                    }
+                    this.loadAlbums();
                 }
             }
         }

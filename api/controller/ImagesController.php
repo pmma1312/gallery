@@ -69,6 +69,34 @@ class ImagesController {
         View::json(DefaultHandler::responseOk("Successfully listed your files!", $data));
     }
 
+    public static function listImagesForUserLimit() {
+        $routeVars = explode("/", str_replace("/api/user/images/", "", Route::getRequestRoute()));
+
+        // SQL injection should not be possible because the route only allows numbers
+        $limit = $routeVars[0];
+        $offset = $routeVars[1];
+
+        if(is_numeric($limit) && is_numeric($offset)) {
+            $conn = Database::getInstance()->getConn();
+            $query = "SELECT image.id, image.path, DATE_FORMAT(image.uploaded_at, '%d.%m.%Y') AS uploaded_at FROM image WHERE image.deleted = 0 AND image.user_id = " . Auth::getTokenVar("uid") . " ORDER BY image.id DESC LIMIT $limit OFFSET $offset";
+            $result = $conn->query($query);
+    
+            $data = [];
+    
+            if($result->num_rows > 0) {
+                while(($res = $result->fetch_array(MYSQLI_ASSOC)) != null) {
+                    array_push($data, $res);
+                }
+            }
+
+            $response = DefaultHandler::responseOk("Successfully listed your files!", $data);
+        } else {
+            $response = DefaultHandler::badRequest("Invalid limit or offset!");
+        }
+
+        View::json($response);
+    }
+
     public static function deleteImage() {
         $response = DefaultHandler::unableToProccessRequest();
 

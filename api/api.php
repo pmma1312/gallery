@@ -11,6 +11,11 @@ Route::get("/api/user/images", function() {
     ImagesController::listImagesForUser();
 }, "Authentication::isAuthenticatedJson");
 
+// /api/user/images/{limit}/{offset}
+Route::get("/api/user/images/([0-9]+)/([0-9]+)", function() {
+    ImagesController::listImagesForUserLimit();
+}, "Authentication::isAuthenticatedJson");
+
 Route::post("/api/user/create", function() {
     UserController::create();
 });

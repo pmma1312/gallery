@@ -7,8 +7,7 @@ class Authentication {
         if(Auth::isAuthorized()) {
             $next();
         } else {
-            header("Location: /login", 401);
-            die();
+            View::html("views/unauthorized.html");
         }
 
     }
