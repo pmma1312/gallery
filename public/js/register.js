@@ -21,7 +21,7 @@ const app = new Vue({
 
                 axios.post("/api/user/create", formData)
                 .then(response => {
-                    setCookie("token", response.data.data.token, "30");
+                    setCookie("token", `Bearer ${response.data.data.token}`, "30");
 
                     Swal.fire(
                         "Success!",
