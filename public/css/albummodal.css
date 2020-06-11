@@ -44,5 +44,5 @@
 }
 
 .thumbnailSelected {
-    background-color: black !important;
+   opacity: .2;
 }

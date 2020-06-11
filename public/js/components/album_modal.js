@@ -5,7 +5,7 @@ export default {
             showAlbumModal: false,
             images: [],
             checkBoxes: [],
-            thumbnail: ""
+            thumbnail: 0
         }
     },
     methods:  {
@@ -49,7 +49,7 @@ export default {
                             <img class="img-album-sm" :src="\`/public/img/uploads/\${image.path}\`">
                             <div class="row mt-2">
                                 <div class="col-12 text-center">
-                                <button class="btn btn-primary" @click="setThumbnail(image.id)" :class="{ 'thumbnailSelected' : this.thumbnail == image.id }">Set as thumbnail</button>
+                                <button class="btn btn-primary" @click="setThumbnail(image.id)" :class="{ 'thumbnailSelected' : thumbnail == image.id }">Set as thumbnail</button>
                                 </div>
                             </div>
                         </div>
