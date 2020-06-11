@@ -25,12 +25,18 @@ const app = new Vue({
                 axios.get(`/api/user/images/${this.limit}/${this.offset}`)
                 .then(response => {
                     if(response.data.data) {
-                        if(!this.images.includes(response.data.data)) {
-                            this.images = this.images.concat(response.data.data);
+                        response.data.data.forEach(item => {
+                            let exists = this.images.find((x) => {
+                                return x.id == item.id;
+                            });
+                            
+                            if(!exists) {
+                                this.images.push(item);
+                            }
+                        });
 
-                            this.offset += this.limit;
-                            this.noNewData = 0;
-                        }
+                        this.offset += this.limit;
+                        this.noNewData = 0;
                     } else {
                         this.noNewData++;
                     }
