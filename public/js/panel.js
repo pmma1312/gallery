@@ -12,7 +12,8 @@ const app = new Vue({
         noNewData: 0,
         isLoading: false,
         albumName: "New Album",
-        modalAlbumBtnText: "Create Album"
+        modalAlbumBtnText: "Create Album",
+        editId: 0
     },
     components: {
         navbar,
@@ -138,7 +139,31 @@ const app = new Vue({
             });
         },
         updateAlbum() {
+            let ids = [];
 
+            for(let i = 0; i < this.$refs.albummodal.checkBoxes.length; i++) {
+                if(this.$refs.albummodal.checkBoxes[i]) {
+                    ids.push(i);
+                }
+            }
+
+            let data = JSON.stringify({
+                "album_id": this.editId,
+                "image_ids": ids,
+                "name": this.albumName,
+                "thumbnail": this.$refs.albummodal.thumbnail
+            });
+
+            let formData = new FormData();
+            formData.set("json", data);
+
+            axios.post("/api/album/update", formData)
+            .then(response => {
+
+            })
+            .catch(error => {
+
+            });
         },
         deleteAlbum(id) {
             axios.delete(`/api/album/${id}`)
@@ -159,14 +184,15 @@ const app = new Vue({
                 );
             });
         },
-        editAlbum(name) {
+        editAlbum(name, id) {
             axios.get(`/api/album/${name}`)
             .then(response => {
                 // TODO: SAVE EDITED ALBUM
-
                 response.data.data.images.forEach(item => {
                     this.$refs.albummodal.checkBoxes[item.id] = true;
                 });
+
+                this.editId = id;
 
                 this.showAlbumModal();
 
