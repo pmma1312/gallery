@@ -8,6 +8,27 @@
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/css/base.css">
     <link rel="stylesheet" href="/public/css/modal.css">
+    <style>
+        .modalImage {
+            max-height: 85vh !important;
+        }
+
+        .icon {
+            width: 42px;
+            height: 42px;
+            margin: 12px;
+        }
+
+        .icon:hover {
+            cursor: pointer;
+        }
+
+        .sticky-bottom {
+            position: fixed;
+            bottom: 0;
+            width: 100vw;
+        }
+    </style>
 </head>
 <body class="bg-dark">
     <div class="container-fluid" id="root">
@@ -24,7 +45,7 @@
                         <div class="card bg-dark h-100">
                             <div class="card-body text-center p-3">
                                 <div class="col-12 d-flex">
-                                    <img :src="`/public/img/uploads/${image.path}`" alt="image" class="img-thumbnail img-expand d-block align-self-center mx-auto" @click="$refs.modal.showModal(image.path)">
+                                    <img :src="`/public/img/uploads/${image.path}`" alt="image" class="img-thumbnail img-expand d-block align-self-center mx-auto" @click="showModal(image.path)">
                                 </div>
                             </div>
                         </div>
@@ -34,12 +55,15 @@
             <div class="col-12">
                 <modal ref="modal">
                     <template v-slot:bottom>
-                        <div class="row">
-                            <div class="col-6">
-                                <p>Previous</p>
+                        <div class="row sticky-bottom">
+                            <div class="col-4">
+                                <img src="/public/img/icons/previous.png" alt="previous" class="icon" @click="previousImage">
                             </div>
-                            <div class="col-6 text-right">
-                                <p>Next</p>
+                            <div class="col-4 text-center align-self-center">
+                                {{ position + 1 }} / {{ album.images.length }}
+                            </div>
+                            <div class="col-4 text-right p-0">
+                                <img src="/public/img/icons/next.png" alt="previous" class="icon mr-2" @click="nextImage">
                             </div>
                         </div>
                     </template>
