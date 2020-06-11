@@ -25,10 +25,6 @@ Route::get("/api/user/images", function() {
     ImagesController::listImagesForUser();
 }, "Authentication::isAuthenticatedJson");
 
-Route::get("/api/album/(.*?)+", function() {
-    AlbumController::load();
-});
-
 // /api/user/images/{limit}/{offset}
 Route::get("/api/user/images/([0-9]+)/([0-9]+)", function() {
     ImagesController::listImagesForUserLimit();
@@ -42,6 +38,10 @@ Route::post("/api/album/create", function() {
     AlbumController::create();
 }, "Authentication::isAuthenticatedJson");
 
+Route::post("/api/album/update", function() {
+    AlbumController::update();
+});
+
 Route::delete("/api/album/([0-9]+)", function() {
     AlbumController::delete();
 }, "Authentication::isAuthenticatedJson");
@@ -53,5 +53,9 @@ Route::post("/api/files/upload", function() {
 Route::delete("/api/image/([0-9]+)", function() {
     ImagesController::deleteImage();
 }, "Authentication::isAuthenticatedJson");
+
+Route::get("/api/album/(.*?)+", function() {
+    AlbumController::load();
+});
 
 ?>

@@ -111,8 +111,36 @@ class AlbumController {
     public static function update() {
         $response = DefaultHandler::unableToProccessRequest();
 
+        // TODO: FIX BUG WHERE UPDATE CAN CAUSE MULTIPLE ALBUMS TO HAVE THE SAME NAME
         if(isset($_POST['json'])) {
-            
+            $data = json_decode($_POST['json'], true);
+
+            if(isset($data['image_ids']) && isset($data['name']) && isset($data['album_id'])) {
+                $user_id = Auth::getTokenVar("uid");
+                $album_id = $data['album_id'];
+
+                $checkDuplicateAlbum = new Album($user_id, $data['name'], null, null);
+
+                $album = new Album(null, null, null, $album_id);
+
+                if($checkDuplicateAlbum->getName() == $album->getName() || ($checkDuplicateAlbum->getId() == $album->getId() || !$checkDuplicateAlbum->exists())) {
+                    if($album->exists()) {
+                        if($album->getUserId() == $user_id) {
+                            if($album->update($data)) {
+                                $response = DefaultHandler::responseOk("Successfully updated the album!");
+                            }
+                        } else {
+                            $response = DefaultHandler::badRequest("You can only edit your own albums.");
+                        }
+                    } else {
+                        $response = DefaultHandler::badRequest("Invalid album id.");
+                    }
+                } else {
+                    $response = DefaultHandler::badRequest("An album with this name exists already!");
+                }
+            } else {
+                $response = DefaultHandler::badRequest("Missing data.");
+            }
         } else {
             $response = DefaultHandler::badRequest("Missing post data.");
         }

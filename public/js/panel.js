@@ -141,9 +141,12 @@ const app = new Vue({
         updateAlbum() {
             let ids = [];
 
+            var active = 0;
+
             for(let i = 0; i < this.$refs.albummodal.checkBoxes.length; i++) {
                 if(this.$refs.albummodal.checkBoxes[i]) {
                     ids.push(i);
+                    active++;
                 }
             }
 
@@ -159,10 +162,29 @@ const app = new Vue({
 
             axios.post("/api/album/update", formData)
             .then(response => {
+                Swal.fire(
+                    "Success!",
+                    response.data.message,
+                    "success"
+                );
+                
+                this.albums.forEach((album, index) => {
+                    if(album.id == this.editId) {
+                        this.albums[index].name = this.albumName;
+                        this.albums[index].images = active;
+                    }
 
+                    i++;
+                });
             })
             .catch(error => {
-
+                if(error.response) {
+                    Swal.fire(
+                        "Error!",
+                        error.response.data.message,
+                        "error"
+                    );
+                }
             });
         },
         deleteAlbum(id) {
