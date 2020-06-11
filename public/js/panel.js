@@ -108,7 +108,7 @@ const app = new Vue({
                 this.albumName = "";
 
                 if(response.data.data) {
-                    this.albums.push(response.data.data);
+                    this.albums = response.data.data.concat(this.albums);
                 }
             })
             .catch(error => {
@@ -146,6 +146,23 @@ const app = new Vue({
                     error.response.data.message,
                     "error"
                 );
+            });
+        },
+        editAlbum(name) {
+            axios.get(`/api/album/${name}`)
+            .then(response => {
+                // TODO: SAVE EDITED ALBUM
+
+                response.data.data.images.forEach(item => {
+                    this.$refs.albummodal.checkBoxes[item.id] = true;
+                });
+
+                this.albumName = name;
+
+                this.showAlbumModal();
+            })
+            .catch(error => {
+                console.log(error);
             });
         },
         uploadFiles(e) {
