@@ -11,7 +11,8 @@ const app = new Vue({
         offset: 0,
         noNewData: 0,
         isLoading: false,
-        albumName: "New Album"
+        albumName: "New Album",
+        modalAlbumBtnText: "Create Album"
     },
     components: {
         navbar,
@@ -57,6 +58,13 @@ const app = new Vue({
                 }
             })
             .catch(error => { console.log(errror) });
+        },
+        resolveAction() {
+            if(this.modalAlbumBtnText == "Create Album") {
+                this.createAlbum();
+            } else {
+                this.updateAlbum();
+            }
         },
         createAlbum() {
             let ids = [];
@@ -129,6 +137,9 @@ const app = new Vue({
                 }
             });
         },
+        updateAlbum() {
+
+        },
         deleteAlbum(id) {
             axios.delete(`/api/album/${id}`)
             .then(response => {
@@ -157,9 +168,11 @@ const app = new Vue({
                     this.$refs.albummodal.checkBoxes[item.id] = true;
                 });
 
-                this.albumName = name;
-
                 this.showAlbumModal();
+
+                this.modalAlbumBtnText = "Update Album"
+
+                this.albumName = name;
             })
             .catch(error => {
                 console.log(error);
@@ -266,6 +279,7 @@ const app = new Vue({
             }
         },
         showAlbumModal() {
+            this.modalAlbumBtnText = "Create Album"
             this.$refs.albummodal.showModal();
         }
     },
