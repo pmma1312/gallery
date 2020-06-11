@@ -108,6 +108,18 @@ class AlbumController {
         View::json(DefaultHandler::responseOk("Successfully got data for album!", $data));
     }
 
+    public static function update() {
+        $response = DefaultHandler::unableToProccessRequest();
+
+        if(isset($_POST['json'])) {
+            
+        } else {
+            $response = DefaultHandler::badRequest("Missing post data.");
+        }
+
+        View::json($response);
+    }
+
 }
 
 ?>

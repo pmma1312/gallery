@@ -151,7 +151,7 @@ const app = new Vue({
                 "album_id": this.editId,
                 "image_ids": ids,
                 "name": this.albumName,
-                "thumbnail": this.$refs.albummodal.thumbnail
+                "thumbnail": (this.$refs.albummodal.thumbnail) ? this.$refs.albummodal.thumbnail : null 
             });
 
             let formData = new FormData();
@@ -188,13 +188,13 @@ const app = new Vue({
             axios.get(`/api/album/${name}`)
             .then(response => {
                 // TODO: SAVE EDITED ALBUM
-                response.data.data.images.forEach(item => {
-                    this.$refs.albummodal.checkBoxes[item.id] = true;
-                });
-
                 this.editId = id;
 
                 this.showAlbumModal();
+
+                response.data.data.images.forEach(item => {
+                    this.$refs.albummodal.checkBoxes[item.id] = true;
+                });
 
                 this.modalAlbumBtnText = "Update Album"
 
@@ -305,7 +305,9 @@ const app = new Vue({
             }
         },
         showAlbumModal() {
-            this.modalAlbumBtnText = "Create Album"
+            this.modalAlbumBtnText = "Create Album";
+            this.$refs.albummodal.checkBoxes = [];
+            this.albumName = "New Album";
             this.$refs.albummodal.showModal();
         }
     },
