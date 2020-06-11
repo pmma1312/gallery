@@ -56,7 +56,7 @@ export default {
                     </div>
                 </div>
             </div>
-            <slot name="below" class="row m-2"></slot>
+            <slot name="below"></slot>
         </div>
     </transition>
     `,

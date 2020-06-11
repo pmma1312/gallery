@@ -21,8 +21,15 @@ const app = new Vue({
 
                 axios.post("/api/user/create", formData)
                 .then(response => {
-                    // TODO: YES
-                    console.log(response);
+                    setCookie("token", response.data.data.token, "30");
+
+                    Swal.fire(
+                        "Success!",
+                        "The registration has been successful!",
+                        "success"
+                    ).then(() => {
+                        window.location.replace("/panel");
+                    }); 
                 })
                 .catch(error => {
                     if(error.response) {

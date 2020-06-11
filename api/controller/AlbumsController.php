@@ -43,7 +43,7 @@ class AlbumsController {
 
     public static function loadUserAlbums() {
         $conn = Database::getInstance()->getConn();
-        $query = "SELECT album.id, album.name, DATE_FORMAT(album.created_at, '%d.%m.%Y') AS created_at, COUNT(image_to_album.image_id) AS images FROM album JOIN image_to_album ON album.id = image_to_album.album_id WHERE album.deleted = 0 AND album.user_id = " . Auth::getTokenVar("uid") . " GROUP BY image_to_album.album_id";
+        $query = "SELECT album.id, album.name, DATE_FORMAT(album.created_at, '%d.%m.%Y') AS created_at, COUNT(image_to_album.image_id) AS images FROM album LEFT JOIN image_to_album ON album.id = image_to_album.album_id LEFT JOIN image ON image_to_album.image_id = image.id WHERE album.deleted = 0 AND album.user_id = " . Auth::getTokenVar("uid") . " AND (image.deleted = 0 OR image.deleted IS NULL) GROUP BY album.id";
         $result = $conn->query($query);
 
         $data = [];

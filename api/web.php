@@ -10,13 +10,18 @@ Route::get("/albums", function() {
     AlbumsController::view();
 });
 
-Route::get("/album/([0-9a-zA-Z]+)", function() {
+Route::get("/album/(.*?)+", function() {
     AlbumController::view();
 });
 
 Route::get("/panel", function() {
-    View::html("views/panel.html");
-}, "Authentication::isAuthenticated");
+    if(Auth::isAuthorized()) {
+        View::html("views/panel.html");
+    } else {
+        header("Location: /login", 401);
+        die();
+    }
+});
 
 Route::get("/login", function() {
     View::html("views/login.html");

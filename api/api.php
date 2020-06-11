@@ -25,7 +25,7 @@ Route::get("/api/user/images", function() {
     ImagesController::listImagesForUser();
 }, "Authentication::isAuthenticatedJson");
 
-Route::get("/api/album/([0-9a-zA-Z]+)", function() {
+Route::get("/api/album/(.*?)+", function() {
     AlbumController::load();
 });
 

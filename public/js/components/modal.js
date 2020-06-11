@@ -42,11 +42,12 @@ export default {
                     <img src="/public/img/icons/delete.png" alt="close" class="icon-modal m-2 mr-4" @click="hideModal" title="close">
                 </div>
             </div>
-            <div class="row">
+            <div class="row mb-2">
                 <div class="col-12">
                     <img :src="\`/public/img/uploads/\${modalImage}\`" alt="image" class="modalImage mx-auto d-block">
                 </div>
             </div>
+            <slot name="bottom" class="row"></slot>
         </div>
     </transition>
     `

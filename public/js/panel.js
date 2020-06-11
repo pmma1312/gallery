@@ -11,7 +11,7 @@ const app = new Vue({
         offset: 0,
         noNewData: 0,
         isLoading: false,
-        albumName: ""
+        albumName: "New Album"
     },
     components: {
         navbar,
@@ -25,10 +25,12 @@ const app = new Vue({
                 axios.get(`/api/user/images/${this.limit}/${this.offset}`)
                 .then(response => {
                     if(response.data.data) {
-                        this.images = this.images.concat(response.data.data);
+                        if(!this.images.includes(response.data.data)) {
+                            this.images = this.images.concat(response.data.data);
 
-                        this.offset += this.limit;
-                        this.noNewData = 0;
+                            this.offset += this.limit;
+                            this.noNewData = 0;
+                        }
                     } else {
                         this.noNewData++;
                     }

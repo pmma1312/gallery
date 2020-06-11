@@ -79,9 +79,9 @@ class AlbumController {
 
     public static function load() {
         $conn = Database::getInstance()->getConn();
-        $albumName = $conn->real_escape_string(str_replace("/api/album/", "", Route::getRequestRoute()));
+        $albumName = urldecode($conn->real_escape_string(str_replace("/api/album/", "", Route::getRequestRoute())));
 
-        $query = "SELECT image.id, image.path, DATE_FORMAT(image.uploaded_at, '%d.%m.%Y') AS uploaded_at FROM album JOIN image_to_album ON album.id = image_to_album.album_id JOIN image ON image_to_album.image_id = image.id WHERE album.name = '" . $albumName . "'";
+        $query = "SELECT image.id, image.path, DATE_FORMAT(image.uploaded_at, '%d.%m.%Y') AS uploaded_at FROM album LEFT JOIN image_to_album ON album.id = image_to_album.album_id LEFT JOIN image ON image_to_album.image_id = image.id WHERE album.name = '" . $albumName . "' AND album.deleted = 0 AND (image.deleted = 0 OR image.deleted IS NULL)";
         $result = $conn->query($query);
 
         $data = [];
@@ -90,7 +90,8 @@ class AlbumController {
             $images = [];
 
             while(($res = $result->fetch_array(MYSQLI_ASSOC)) != null) {
-                array_push($images, $res);
+                if(!is_null($res['id']))
+                    array_push($images, $res);
             }
 
             $data = [

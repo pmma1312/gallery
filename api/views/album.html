@@ -32,7 +32,18 @@
                 </div>
             </div>
             <div class="col-12">
-                <modal ref="modal"></modal>
+                <modal ref="modal">
+                    <template v-slot:bottom>
+                        <div class="row">
+                            <div class="col-6">
+                                <p>Previous</p>
+                            </div>
+                            <div class="col-6 text-right">
+                                <p>Next</p>
+                            </div>
+                        </div>
+                    </template>
+                </modal>
             </div>
         </div>
     </div>
