@@ -77,6 +77,36 @@ class AlbumController {
         View::json($response);
     }
 
+    public static function load() {
+        $conn = Database::getInstance()->getConn();
+        $albumName = $conn->real_escape_string(str_replace("/api/album/", "", Route::getRequestRoute()));
+
+        $query = "SELECT image.id, image.path, DATE_FORMAT(image.uploaded_at, '%d.%m.%Y') AS uploaded_at FROM album JOIN image_to_album ON album.id = image_to_album.album_id JOIN image ON image_to_album.image_id = image.id WHERE album.name = '" . $albumName . "'";
+        $result = $conn->query($query);
+
+        $data = [];
+
+        if($result->num_rows > 0) {
+            $images = [];
+
+            while(($res = $result->fetch_array(MYSQLI_ASSOC)) != null) {
+                array_push($images, $res);
+            }
+
+            $data = [
+                "name" => strip_tags($albumName),
+                "images" => $images
+            ];
+        } else {
+            $data = [
+                "name" => "Not found!",
+                "images" => []
+            ];
+        }
+
+        View::json(DefaultHandler::responseOk("Successfully got data for album!", $data));
+    }
+
 }
 
 ?>

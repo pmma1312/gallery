@@ -46,4 +46,4 @@ CREATE TABLE image_to_album (
 );
 
 CREATE USER 'gallery'@'localhost' IDENTIFIED BY '1337';
-GRANT SELECT, INSERT, UPDATE ON pGallery.* TO 'gallery'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON pGallery.* TO 'gallery'@'localhost';

@@ -42,3 +42,7 @@
     outline: 1px solid black;
     border-bottom-right-radius: .25rem;
 }
+
+.thumbnailSelected {
+    background-color: black !important;
+}

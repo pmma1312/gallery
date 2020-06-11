@@ -5,38 +5,7 @@ const app = new Vue({
     data: {
         limit: 30,
         offset: 0,
-        albums: [
-            {
-                name: "test",
-                created_at: "09.06.2020",
-                username: "testUser",
-                thumbnail: "example.jpg"
-            },
-            {
-                name: "test2",
-                created_at: "09.06.2020",
-                username: "testUser",
-                thumbnail: "example.jpg"
-            },
-            {
-                name: "test3",
-                created_at: "09.06.2020",
-                username: "testUser",
-                thumbnail: "example.jpg"
-            },
-            {
-                name: "test4",
-                created_at: "09.06.2020",
-                username: "testUser",
-                thumbnail: "example.jpg"
-            },
-            {
-                name: "test5",
-                created_at: "09.06.2020",
-                username: "testUser",
-                thumbnail: "example.jpg"
-            }
-        ],
+        albums: [ ],
         noNewData: 0
     },
     components: {
