@@ -37,16 +37,16 @@
             overflow-y: auto;
         }
 
-        .my-images::-webkit-scrollbar {
+        .my-images::-webkit-scrollbar, .my-albums::-webkit-scrollbar {
             width: .8em;
         }
 
-        .my-images::-webkit-scrollbar-track {
+        .my-images::-webkit-scrollbar-track, .my-albums::-webkit-scrollbar-track {
             box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.096);
             border-bottom-right-radius: 6px;
         }
 
-        .my-images::-webkit-scrollbar-thumb {
+        .my-images::-webkit-scrollbar-thumb, .my-albums::-webkit-scrollbar-thumb {
             background-color: rgba(0, 0, 0, 0.219);
             outline: 1px solid black;
             border-bottom-right-radius: .25rem;
@@ -102,7 +102,31 @@
                                         <button class="d-inline-block btn btn-secondary float-right" @click="showAlbumModal">New Album</button>
                                     </div>
                                     <div class="card-body my-albums">
-                                        
+                                        <div class="card mb-2 bg-dark" v-for="album in albums">
+                                            <div class="card-header">
+                                                <h4>{{ album.name }}</h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <a :href="`/album/${album.name}`" class="btn btn-primary">
+                                                            View
+                                                        </a>
+                                                        <button class="btn btn-primary">
+                                                            Edit
+                                                        </button>
+                                                        <button class="btn btn-danger">
+                                                            Delete
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <p class="text-muted m-0">
+                                                            Images: {{ album.images }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

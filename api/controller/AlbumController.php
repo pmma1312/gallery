@@ -27,7 +27,10 @@ class AlbumController {
                             }
     
                             $response = DefaultHandler::responseOk("Successfully created the album!", [
-                                
+                                "id" => $album->getId(),
+                                "name" => $album->getName(),
+                                "created_at" => $album->getCreatedAt(),
+                                "images" => sizeof($image_ids)
                             ]);
                         }
                     } else {

@@ -69,6 +69,14 @@ class Album {
         return $this->id;
     }
 
+    public function getCreatedAt() : string {
+        return date("d.m.Y");
+    }
+
+    public function getName() : string {
+        return $this->name;
+    }
+
     public function getErrors() : array {
         return $this->errors;
     }

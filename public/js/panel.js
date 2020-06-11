@@ -94,6 +94,14 @@ const app = new Vue({
                     "Your album has been created!",
                     "success"
                 );
+
+                this.$refs.albummodal.checkBoxes = [];
+                this.$refs.albummodal.thumbnail = "";
+                this.albumName = "";
+
+                if(response.data.data) {
+                    this.albums.push(response.data.data);
+                }
             })
             .catch(error => {
                 if(error.response) {
