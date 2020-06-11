@@ -121,6 +121,25 @@ const app = new Vue({
                 }
             });
         },
+        deleteAlbum(id) {
+            axios.delete(`/api/album/${id}`)
+            .then(response => {
+                Swal.fire(
+                    "Success!",
+                    response.data.message,
+                    "success"
+                );
+
+                this.albums = this.albums.filter(item => item.id != id);
+            })
+            .catch(error => {
+                Swal.fire(
+                    "Error!",
+                    error.response.data.message,
+                    "error"
+                );
+            });
+        },
         uploadFiles(e) {
             e.preventDefault();
 

@@ -53,6 +53,30 @@ class AlbumController {
         View::json($response);
     }
 
+    public static function delete() {
+        $response = DefaultHandler::unableToProccessRequest();
+
+        $albumId = str_replace("/api/album/", "", Route::getRequestRoute());
+
+        if(is_numeric($albumId)) {
+            $album = new Album(null, null, null, $albumId);
+
+            if($album->exists()) {
+                if(Auth::getTokenVar("uid") == $album->getUserId()) {
+                    if($album->delete()) {
+                        $response = DefaultHandler::responseOk("The album has been deleted!");
+                    }
+                } else {
+                    $response = DefaultHandler::badRequest("You can only delete your own albums!");
+                }
+            } else {
+                $response = DefaultHandler::badRequest("The album you're trying to delete doesn't exist!");
+            }
+        }
+
+        View::json($response);
+    }
+
 }
 
 ?>

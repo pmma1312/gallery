@@ -38,6 +38,10 @@ Route::post("/api/album/create", function() {
     AlbumController::create();
 }, "Authentication::isAuthenticatedJson");
 
+Route::delete("/api/album/([0-9]+)", function() {
+    AlbumController::delete();
+});
+
 Route::post("/api/files/upload", function() {
     ImagesController::uploadImages();
 }, "Authentication::isAuthenticatedJson");

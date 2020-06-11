@@ -2,29 +2,56 @@
 
 class Album {
 
-    private $id = null;
+    private $id;
     private $conn;
     private $user_id;
     private $thumbnail_id;
     private $name;
     private $errors = [];
 
-    public function __construct($user_id, $name, $thumbnail_id) {
+    public function __construct($user_id, $name, $thumbnail_id, $id = null) {
         $this->conn = Database::getInstance()->getConn();
         $this->user_id = $user_id;
         $this->thumbnail_id = $thumbnail_id;
         $this->name = $this->conn->real_escape_string(strip_tags(trim($name)));
+        $this->id = $id;
         $this->load();
     }
 
     private function load() : void {
-        $query = "SELECT * FROM album WHERE name = '" . $this->name . "'";
+        $query = "SELECT * FROM album WHERE ";
+
+        if(!$this->exists()) {
+            $query .= "name = '" . $this->name . "'";
+        } else {
+            $query .= "id = " . $this->id;
+        }
+
         $result = $this->conn->query($query);
 
         if($result->num_rows > 0) {
             $result = $result->fetch_array(MYSQLI_ASSOC);
             $this->id = $result['id'];
+            $this->user_id = $result['user_id'];
+        } else {
+            $this->id = null;
         }
+    }
+
+    public function delete() : bool {
+        $isDeleted = false;
+
+        $query = "DELETE FROM image_to_album WHERE album_id = " . $this->id;
+
+        $this->conn->query($query);
+
+        $query = "UPDATE album SET deleted = 1 WHERE id = " . $this->id;
+
+        if($this->conn->query($query)) {
+            $isDeleted = true;
+        }
+
+        return $isDeleted;
     }
 
     public function exists() : bool {
@@ -75,6 +102,10 @@ class Album {
 
     public function getName() : string {
         return $this->name;
+    }
+
+    public function getUserId() : int {
+        return $this->user_id;
     }
 
     public function getErrors() : array {
