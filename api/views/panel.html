@@ -13,10 +13,13 @@
         .icon-delete {
             width: 32px; 
             height: 32px;
+            transition: filter .2s ease-in;
         }
 
         .icon-delete:hover {
             cursor: pointer;
+            filter: opacity(0.6) drop-shadow(0 0 0 rgb(255, 0, 0));
+            transition: filter .2s ease-out;
         }
 
         .fade-enter-active, .fade-leave-active {
@@ -30,7 +33,7 @@
 
         .my-images {
             max-height: 700px;
-            overflow-y: scroll;
+            overflow-y: auto;
         }
 
         .my-images::-webkit-scrollbar {
@@ -46,6 +49,11 @@
             background-color: rgba(0, 0, 0, 0.219);
             outline: 1px solid black;
             border-bottom-right-radius: .25rem;
+        }
+
+        .my-albums {
+            max-height: 250px;
+            overflow-y: auto;
         }
 
         .loading-gif {
@@ -67,8 +75,8 @@
                 <div class="card mt-3 bg-dark">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-12 col-md-6">
-                                <div class="card bg-dark m-2">
+                            <div class="col-12 d-flex col-md-6">
+                                <div class="card flex-fill bg-dark m-2">
                                     <div class="card-header">
                                         <h4>Upload Images</h4>
                                     </div>
@@ -86,12 +94,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6">
-                                <div class="card bg-dark m-2">
+                            <div class="col-12 d-flex col-md-6">
+                                <div class="card flex-fill bg-dark m-2">
                                     <div class="card-header">
-                                        <h4>Not My Images</h4>
+                                        <h4 class="d-inline">My Albums</h4>
+                                        <button class="d-inline-block btn btn-secondary float-right">New Album</button>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-body my-albums">
                                         
                                     </div>
                                 </div>
@@ -105,7 +114,7 @@
                                         <transition-group name="fade" tag="div" class="row d-flex">
                                             <div class="my-col" v-for="image in images" v-bind:key="image.id">
                                                 <div class="card bg-dark h-100">
-                                                    <div class="card-body text-center">
+                                                    <div class="card-body p-3 text-center">
                                                         <div class="row">
                                                             <div class="col-12 text-right">
                                                                 <img src="/public/img/icons/delete.png" alt="delete" title="delete" class="icon-delete" @click="deleteImage(image.id)">
@@ -114,7 +123,7 @@
                                                                 <img :src="`/public/img/uploads/${image.path}`" alt="image" class="img-thumbnail img-expand d-block align-self-center mx-auto" @click="$refs.modal.showModal(image.path)">
                                                             </div>
                                                         </div>
-                                                        <p class="text-muted m-0 mt-2">Uploaded at {{ image.uploaded_at }}</p>
+                                                        <p class="text-muted align-text-bottom m-0 mt-2">Uploaded at {{ image.uploaded_at }}</p>
                                                     </div>
                                                 </div>
                                             </div>

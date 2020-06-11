@@ -1,9 +1,10 @@
 .out-enter-active, .out-leave-active {
-    transition: all .7s;
+    transition: all .5s;
 }
 
 .out-enter, .out-leave-to /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
+    filter: blur(8px);
 }
 
 .image-modal {
@@ -24,4 +25,16 @@
     width: auto;
     max-width: 100%;
     transition: all;
+}
+
+.icon-modal {
+    width: 32px; 
+    height: 32px;
+    transition: filter .2s ease-in;
+}
+
+.icon-modal:hover {
+    cursor: pointer;
+    filter: opacity(0.6) drop-shadow(0 0 0 rgb(0, 47, 255));
+    transition: filter .2s ease-out;
 }

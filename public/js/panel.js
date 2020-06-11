@@ -131,10 +131,6 @@ const app = new Vue({
         infinityScroll() {
             this.$refs.imagesContainer.onscroll = () => {
                 let bottomOfWindow = this.$refs.imagesContainer.scrollTop + this.$refs.imagesContainer.clientHeight ===  this.$refs.imagesContainer.scrollHeight;
-            
-                console.log(this.$refs.imagesContainer.scrollTop);
-                console.log(this.$refs.imagesContainer.clientHeight);
-                console.log(this.$refs.imagesContainer.scrollHeight);
 
                 if (bottomOfWindow) {
                     this.loadImages();
