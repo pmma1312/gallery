@@ -7,7 +7,8 @@ const app = new Vue({
         images: [],
         limit: 15,
         offset: 0,
-        noNewData: 0
+        noNewData: 0,
+        isLoading: false
     },
     components: {
         navbar,
@@ -16,6 +17,7 @@ const app = new Vue({
     methods: {
         loadImages() {
             if(this.noNewData < 3) {
+                this.isLoading = true;
                 axios.get(`/api/user/images/${this.limit}/${this.offset}`)
                 .then(response => {
                     if(response.data.data) {
@@ -29,6 +31,9 @@ const app = new Vue({
                 })
                 .catch(error => {
                     console.log(error);
+                })
+                .finally(() => {
+                    this.isLoading = false;
                 });
             }
         },

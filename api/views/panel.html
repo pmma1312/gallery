@@ -47,6 +47,11 @@
             outline: 1px solid black;
             border-bottom-right-radius: .25rem;
         }
+
+        .loading-gif {
+            width: 40px;
+            height: 40px;
+        }
     </style>
 </head>
 <body class="bg-dark">
@@ -109,10 +114,16 @@
                                                                 <img :src="`/public/img/uploads/${image.path}`" alt="image" class="img-thumbnail img-expand d-block align-self-center mx-auto" @click="$refs.modal.showModal(image.path)">
                                                             </div>
                                                         </div>
+                                                        <p class="text-muted m-0 mt-2">Uploaded at {{ image.uploaded_at }}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </transition-group>
+                                        <div class="row">
+                                            <div class="col-12 text-center" v-show="isLoading">
+                                                <img src="/public/img/icons/loadingImages.gif" alt="Loading..." class="loading-gif">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
