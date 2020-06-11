@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +13,7 @@
     <link rel="stylesheet" href="/public/css/albummodal.css">
     <style>
         .icon-delete {
-            width: 32px; 
+            width: 32px;
             height: 32px;
             transition: filter .2s ease-in;
         }
@@ -23,11 +24,16 @@
             transition: filter .2s ease-out;
         }
 
-        .fade-enter-active, .fade-leave-active {
+        .fade-enter-active,
+        .fade-leave-active {
             transition: all 1s;
         }
 
-        .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+        .fade-enter,
+        .fade-leave-to
+
+        /* .fade-leave-active below version 2.1.8 */
+            {
             opacity: 0;
             transform: translateY(100px);
         }
@@ -37,16 +43,19 @@
             overflow-y: auto;
         }
 
-        .my-images::-webkit-scrollbar, .my-albums::-webkit-scrollbar {
+        .my-images::-webkit-scrollbar,
+        .my-albums::-webkit-scrollbar {
             width: .8em;
         }
 
-        .my-images::-webkit-scrollbar-track, .my-albums::-webkit-scrollbar-track {
+        .my-images::-webkit-scrollbar-track,
+        .my-albums::-webkit-scrollbar-track {
             box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.096);
             border-bottom-right-radius: 6px;
         }
 
-        .my-images::-webkit-scrollbar-thumb, .my-albums::-webkit-scrollbar-thumb {
+        .my-images::-webkit-scrollbar-thumb,
+        .my-albums::-webkit-scrollbar-thumb {
             background-color: rgba(0, 0, 0, 0.219);
             outline: 1px solid black;
             border-bottom-right-radius: .25rem;
@@ -63,6 +72,7 @@
         }
     </style>
 </head>
+
 <body class="bg-dark">
     <div class="container-fluid" id="root">
         <div class="row">
@@ -73,90 +83,98 @@
                 <h1 class="display-4 mt-3">Panel</h1>
             </div>
             <div class="col-12">
-                <div class="card mt-3 bg-dark">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 d-flex col-md-6">
-                                <div class="card flex-fill bg-dark m-2">
-                                    <div class="card-header">
-                                        <h4>Upload Images</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <form @submit="uploadFiles">
-                                            <div class="form-group">
-                                                <label for="files">Files:</label>
-                                                <input class="form-control bg-dark text-white p-1" type="file" name="file" ref="files" multiple="multiple" accept="image/jpeg,image/x-png,image/gif">
-                                            </div>
-                                            <p class="text-muted m-0 mb-2">
-                                                Please don't upload more than 10 files per upload.
-                                            </p>
-                                            <input type="submit" value="Upload" class="form-control bg-dark text-white">
-                                        </form>
-                                    </div>
+                <div class="mt-3 bg-dark">
+                    <div class="row">
+                        <div class="col-12 d-flex col-md-6">
+                            <div class="card flex-fill bg-dark m-2">
+                                <div class="card-header">
+                                    <h4>Upload Images</h4>
+                                </div>
+                                <div class="card-body">
+                                    <form @submit="uploadFiles">
+                                        <div class="form-group">
+                                            <label for="files">Files:</label>
+                                            <input class="form-control bg-dark text-white p-1" type="file" name="file"
+                                                ref="files" multiple="multiple"
+                                                accept="image/jpeg,image/x-png,image/gif">
+                                        </div>
+                                        <p class="text-muted m-0 mb-2">
+                                            Please don't upload more than 10 files per upload.
+                                        </p>
+                                        <input type="submit" value="Upload" class="form-control bg-dark text-white">
+                                    </form>
                                 </div>
                             </div>
-                            <div class="col-12 d-flex col-md-6">
-                                <div class="card flex-fill bg-dark m-2">
-                                    <div class="card-header">
-                                        <h4 class="d-inline">My Albums</h4>
-                                        <button class="d-inline-block btn btn-secondary float-right" @click="showAlbumModal">New Album</button>
-                                    </div>
-                                    <div class="card-body my-albums">
-                                        <div class="card mb-2 bg-dark" v-for="album in albums">
-                                            <div class="card-header">
-                                                <h4>{{ album.name }}</h4>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <a :href="`/album/${album.name}`" class="btn btn-primary">
-                                                            View
-                                                        </a>
-                                                        <button class="btn btn-primary" @click="editAlbum(album.name, album.id)">
-                                                            Edit
-                                                        </button>
-                                                        <button class="btn btn-danger" @click="deleteAlbum(album.id)">
-                                                            Delete
-                                                        </button>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <p class="text-muted m-0">
-                                                            Images: {{ album.images }}
-                                                        </p>
-                                                    </div>
+                        </div>
+                        <div class="col-12 d-flex col-md-6">
+                            <div class="card flex-fill bg-dark m-2">
+                                <div class="card-header">
+                                    <h4 class="d-inline">My Albums</h4>
+                                    <button class="d-inline-block btn btn-secondary float-right"
+                                        @click="showAlbumModal">New Album</button>
+                                </div>
+                                <div class="card-body my-albums">
+                                    <div class="card mb-2 bg-dark" v-for="album in albums">
+                                        <div class="card-header">
+                                            <h4>{{ album.name }}</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <a :href="`/album/${album.name}`" class="btn btn-primary">
+                                                        View
+                                                    </a>
+                                                    <button class="btn btn-primary"
+                                                        @click="editAlbum(album.name, album.id)">
+                                                        Edit
+                                                    </button>
+                                                    <button class="btn btn-danger" @click="deleteAlbum(album.id)">
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                                <div class="col-12">
+                                                    <p class="text-muted m-0">
+                                                        Images: {{ album.images }}
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="card bg-dark m-2">
-                                    <div class="card-header">
-                                        <h4>My Images</h4>
-                                    </div>
-                                    <div class="card-body my-images" ref="imagesContainer">
-                                        <transition-group name="fade" tag="div" class="row d-flex">
-                                            <div class="my-col" v-for="image in images" v-bind:key="image.id">
-                                                <div class="card bg-dark h-100">
-                                                    <div class="card-body p-3 text-center">
-                                                        <div class="row">
-                                                            <div class="col-12 text-right">
-                                                                <img src="/public/img/icons/delete.png" alt="delete" title="delete" class="icon-delete" @click="deleteImage(image.id)">
-                                                            </div>
-                                                            <div class="col-12 d-flex">
-                                                                <img :src="`/public/img/uploads/${image.path}`" alt="image" class="img-thumbnail img-expand d-block align-self-center mx-auto" @click="$refs.modal.showModal(image.path)">
-                                                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="card bg-dark m-2">
+                                <div class="card-header">
+                                    <h4>My Images</h4>
+                                </div>
+                                <div class="card-body my-images" ref="imagesContainer">
+                                    <transition-group name="fade" tag="div" class="row d-flex">
+                                        <div class="my-col" v-for="image in images" v-bind:key="image.id">
+                                            <div class="card bg-dark h-100">
+                                                <div class="card-body p-3 text-center">
+                                                    <div class="row">
+                                                        <div class="col-12 text-right">
+                                                            <img src="/public/img/icons/delete.png" alt="delete"
+                                                                title="delete" class="icon-delete"
+                                                                @click="deleteImage(image.id)">
                                                         </div>
-                                                        <p class="text-muted align-text-bottom m-0 mt-2">Uploaded at {{ image.uploaded_at }}</p>
+                                                        <div class="col-12 d-flex">
+                                                            <img :src="`/public/img/uploads/${image.path}`" alt="image"
+                                                                class="img-thumbnail img-expand d-block align-self-center mx-auto"
+                                                                @click="$refs.modal.showModal(image.path)">
+                                                        </div>
                                                     </div>
+                                                    <p class="text-muted align-text-bottom m-0 mt-2">Uploaded at
+                                                        {{ image.uploaded_at }}</p>
                                                 </div>
                                             </div>
-                                        </transition-group>
-                                        <div class="row">
-                                            <div class="col-12 text-center" v-show="isLoading">
-                                                <img src="/public/img/icons/loadingImages.gif" alt="Loading..." class="loading-gif">
-                                            </div>
+                                        </div>
+                                    </transition-group>
+                                    <div class="row">
+                                        <div class="col-12 text-center" v-show="isLoading">
+                                            <img src="/public/img/icons/loadingImages.gif" alt="Loading..."
+                                                class="loading-gif">
                                         </div>
                                     </div>
                                 </div>
@@ -175,7 +193,8 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="name">Album Name:</label>
-                                <input type="text" name="name" v-model="albumName" class="form-control bg-dark text-light">
+                                <input type="text" name="name" v-model="albumName"
+                                    class="form-control bg-dark text-light">
                             </div>
                         </div>
                     </template>
@@ -195,4 +214,5 @@
     <script src="/public/js/lib/vue.js"></script>
     <script src="/public/js/panel.js" type="module"></script>
 </body>
+
 </html>
