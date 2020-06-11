@@ -6,6 +6,10 @@ class AlbumController {
         View::html("views/album.html");
     }
 
+    public static function create() {
+        
+    }
+
 }
 
 ?>

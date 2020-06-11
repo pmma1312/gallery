@@ -5,6 +5,7 @@ const app = new Vue({
     el: "#root",
     data: {
         images: [],
+        albums: [],
         limit: 15,
         offset: 0,
         noNewData: 0,
@@ -36,6 +37,15 @@ const app = new Vue({
                     this.isLoading = false;
                 });
             }
+        },
+        loadAlbums() {
+            axios.get("/api/user/albums")
+            .then(response => {
+                if(response.data.data) {
+                    this.albums = response.data.data;
+                }
+            })
+            .catch(error => { console.log(errror) });
         },
         uploadFiles(e) {
             e.preventDefault();
@@ -130,9 +140,9 @@ const app = new Vue({
         },
         infinityScroll() {
             this.$refs.imagesContainer.onscroll = () => {
-                let bottomOfWindow = this.$refs.imagesContainer.scrollTop + this.$refs.imagesContainer.clientHeight ===  this.$refs.imagesContainer.scrollHeight;
+                let bottomOfDiv = this.$refs.imagesContainer.scrollTop + this.$refs.imagesContainer.clientHeight ===  this.$refs.imagesContainer.scrollHeight;
 
-                if (bottomOfWindow) {
+                if (bottomOfDiv) {
                     this.loadImages();
                 }
             }
@@ -140,6 +150,7 @@ const app = new Vue({
     },
     mounted() {
         this.loadImages();
+        this.loadAlbums();
         this.infinityScroll();
     }
 });

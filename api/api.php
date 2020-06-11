@@ -16,6 +16,14 @@ Route::get("/api/user/images/([0-9]+)/([0-9]+)", function() {
     ImagesController::listImagesForUserLimit();
 }, "Authentication::isAuthenticatedJson");
 
+Route::get("/api/user/albums", function() {
+    AlbumsController::loadUserAlbums();
+});
+
+Route::post("/api/album/create", function() {
+    AlbumController::create();
+});
+
 Route::post("/api/user/create", function() {
     UserController::create();
 });
