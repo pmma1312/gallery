@@ -35,12 +35,12 @@ export default {
     <transition name="out">
         <div class="image-modal" v-show="showImageModal">
             <div class="row h-100 d-flex">
-                <div class="col-12 mt-2">
+                <div class="col-12 my-modal-header">
                     <div class="row">
                         <div class="col-4 text-left">
                             <img src="/public/img/icons/download.png" alt="download" class="icon-modal m-2" @click="downloadImage" title="download">
                         </div>
-                        <div class="col-4 text-center">
+                        <div class="col-4 text-center align-self-center">
                             <slot name="additional"></slot>
                         </div>
                         <div class="col-4 text-right">
@@ -50,7 +50,7 @@ export default {
                 </div>
                 <div class="col-12">
                     <div class="row mb-2">
-                        <div class="col-12">
+                        <div class="col-12 d-flex align-items-center justify-content-center">
                             <img :src="\`/public/img/uploads/\${modalImage}\`" alt="image" class="modalImage mx-auto d-block">
                         </div>
                     </div>

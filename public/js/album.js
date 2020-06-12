@@ -86,6 +86,12 @@ const app = new Vue({
 
                     index++;
                 }, 4000);
+            } else {
+                if(this.album.images[0].path) {
+                    this.position = 0;
+                    this.$refs.modal.modalImage = this.album.images[0].path;
+                    this.playSlideshow();
+                }
             }
         },
         stopSlideshow() {

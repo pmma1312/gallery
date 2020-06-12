@@ -21,13 +21,17 @@
 
 .modalImage {
     height: auto;
-    max-height: 90vh;
+    max-height: 85vh;
     width: auto;
     max-width: 100%;
     transition: all;
-    -webkit-box-shadow: 0px 0px 13px 3px rgba(0,0,0,0.63);
-    -moz-box-shadow: 0px 0px 13px 3px rgba(0,0,0,0.63);
-    box-shadow: 0px 0px 13px 3px rgba(0,0,0,0.63);
+    -webkit-box-shadow: 0px 0px 10px 4px rgba(0,0,0,0.63);
+    -moz-box-shadow: 0px 0px 10px 4px rgba(0,0,0,0.63);
+    box-shadow: 0px 0px 10px 4px rgba(0,0,0,0.63);
+}
+
+.my-modal-header {
+    max-height: 40px;
 }
 
 .icon-modal {
