@@ -106,8 +106,8 @@ const app = new Vue({
             Swal.fire({
                 title: '',
                 html: `
-                <img src='/public/img/icons/loading.gif' style='width: 128px; height: auto;'>
-                <p>Please wait while we download the album...</p>
+                <img src='/public/img/icons/loadingImages.gif' style='width: 60px; height: auto;'>
+                <p>Please wait while we prepare the album for you...</p>
                 `,
                 showConfirmButton: false,
                 allowOutsideClick: false
