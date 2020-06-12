@@ -85,7 +85,7 @@ const app = new Vue({
                     }
 
                     index++;
-                }, 3000);
+                }, 4000);
             }
         },
         stopSlideshow() {

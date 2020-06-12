@@ -2,7 +2,10 @@
     transition: all .5s;
 }
 
-.out-enter, .out-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.out-enter, .out-leave-to
+/* .fade-leave-active below version 2.1.8 */
+
+    {
     opacity: 0;
     filter: blur(8px);
 }
@@ -28,7 +31,7 @@
 }
 
 .icon-modal {
-    width: 32px; 
+    width: 32px;
     height: 32px;
     transition: filter .2s ease-in;
 }
@@ -37,4 +40,13 @@
     cursor: pointer;
     filter: opacity(0.6) drop-shadow(0 0 0 rgb(0, 47, 255));
     transition: filter .2s ease-out;
+}
+
+.row-2 {
+    display: flex;
+    flex-direction: column;
+}
+
+.c {
+    order: 1;
 }
