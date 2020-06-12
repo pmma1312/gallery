@@ -13,7 +13,9 @@ const app = new Vue({
             },
             images: []
         },
-        position: 0
+        position: 0,
+        isPlaying: false,
+        slideshow: ""
     },
     components: {
         navbar,
@@ -65,6 +67,31 @@ const app = new Vue({
                 this.nextImage();
             } else if(e.keyCode == 27) {
                 this.$refs.modal.hideModal();
+            }
+        },
+        playSlideshow() {
+            var index = this.getImageIndex();   
+            var instance = this;
+
+            if((index + 1) < this.album.images.length) {
+                this.isPlaying = true;
+
+                this.slideshow = setInterval(function() {
+                    if((index + 1) < instance.album.images.length) {
+                        instance.nextImage();
+                    } else {
+                        instance.isPlaying = false;
+                        clearInterval(instance.slideshow);
+                    }
+
+                    index++;
+                }, 3000);
+            }
+        },
+        stopSlideshow() {
+            if(this.isPlaying) {
+                clearInterval(this.slideshow);
+                this.isPlaying = false;
             }
         }
     },

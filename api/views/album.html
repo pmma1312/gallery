@@ -67,6 +67,10 @@
             </div>
             <div class="col-12">
                 <modal ref="modal">
+                    <template v-slot:additional>
+                        <img src="/public/img/icons/play.png" alt="play" class="icon-modal m-2 mr-4" @click="playSlideshow" title="play" v-if="!isPlaying">
+                        <img src="/public/img/icons/pause.png" alt="play" class="icon-modal m-2 mr-4" @click="stopSlideshow" title="play" v-else>
+                    </template>
                     <template v-slot:bottom>
                         <div class="row sticky-bottom">
                             <div class="col-4">
