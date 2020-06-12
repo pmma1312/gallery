@@ -82,3 +82,9 @@
 .img-expand {
     transition: opacity ease .2s;
 }
+
+.img-expand:hover {
+    cursor: pointer;
+    opacity: .5;
+    transition: opacity ease .2s;
+}
