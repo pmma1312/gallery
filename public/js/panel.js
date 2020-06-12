@@ -270,6 +270,7 @@ const app = new Vue({
                     // Prepend fresh uploaded images to images array
                     if(response.data.data.images) {
                         this.images = response.data.data.images.concat(this.images);
+                        this.$refs.albummodal.images = this.images;
                     }
 
                     e.target.reset();
