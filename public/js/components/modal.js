@@ -29,6 +29,11 @@ export default {
 
                 document.body.removeChild(link);
             }
+        },
+        keydown(e) {
+            if(e.keyCode == 27) {
+                this.hideModal();
+            }
         }
     },
     template: `
@@ -59,5 +64,8 @@ export default {
             <slot name="bottom" class="row"></slot>
         </div>
     </transition>
-    `
+    `,
+    mounted() {
+        document.addEventListener("keydown", this.keydown);
+    }
 };

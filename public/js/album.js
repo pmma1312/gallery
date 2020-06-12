@@ -65,8 +65,6 @@ const app = new Vue({
             } else if(e.keyCode == 39) {
                 // Right
                 this.nextImage();
-            } else if(e.keyCode == 27) {
-                this.$refs.modal.hideModal();
             }
         },
         playSlideshow() {
