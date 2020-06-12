@@ -218,6 +218,8 @@ const app = new Vue({
                     this.$refs.albummodal.checkBoxes[item.id] = true;
                 });
 
+                this.$refs.albummodal.thumbnail = response.data.data.images[0].thumbnail_id;
+
                 this.modalAlbumBtnText = "Update Album"
 
                 this.albumName = name;
@@ -330,6 +332,7 @@ const app = new Vue({
             this.modalAlbumBtnText = "Create Album";
             this.$refs.albummodal.checkBoxes = [];
             this.albumName = "New Album";
+            this.$refs.albummodal.thumbnail = 0;
             this.$refs.albummodal.showModal();
         }
     },
