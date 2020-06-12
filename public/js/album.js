@@ -99,6 +99,54 @@ const app = new Vue({
                 clearInterval(this.slideshow);
                 this.isPlaying = false;
             }
+        },
+        async downloadAlbum() {
+            let zip = new JSZip();
+
+            Swal.fire({
+                title: '',
+                html: `
+                <img src='/public/img/icons/loading.gif' style='width: 128px; height: auto;'>
+                <p>Please wait while we download the album...</p>
+                `,
+                showConfirmButton: false,
+                allowOutsideClick: false
+            });
+
+            for(let i = 0; i < this.album.images.length; i++) {
+                await axios.get(`/public/img/uploads/${this.album.images[i].path}`, {
+                    responseType: 'blob',
+                })
+                .then(response => {
+                    if(response.data) {
+                        zip.file(this.album.images[i].path, response.data, {
+                            binary: true
+                        });
+                    }
+                })
+                .catch(error => {});
+            }
+
+            await zip.generateAsync({
+                type: "blob"
+            }).then((content) => {
+                var uriContent = URL.createObjectURL(content);
+
+                let downloadLink = document.createElement("a");
+                downloadLink.download = this.album.album.name + ".zip";
+                downloadLink.href = uriContent;
+
+                document.body.appendChild(downloadLink);
+
+                downloadLink.click();
+
+                document.body.removeChild(downloadLink);
+            });
+
+            Swal.fire({
+                timer: 1,
+                showConfirmButton: false
+            });
         }
     },
     mounted() {
