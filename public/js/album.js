@@ -75,7 +75,7 @@ const app = new Vue({
                 this.isPlaying = true;
 
                 this.slideshow = setInterval(function() {
-                    if((index + 1) < instance.album.images.length) {
+                    if((index + 1) < instance.album.images.length && instance.$refs.modal.showImageModal) {
                         instance.nextImage();
                     } else {
                         instance.isPlaying = false;
