@@ -31,7 +31,8 @@
 
         .card-custom {
             border: 0px !important;
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 8px;
         }
 
         .my-col {
@@ -48,15 +49,16 @@
                 <navbar></navbar>
             </div>
             <div class="col-12">
-                <h1 class="display-4 mt-3">{{ album.name }}</h1>
+                <h1 class="display-4 mt-3">{{ album.album.name }}</h1>
             </div>
             <div class="col-12">
                 <div class="row m-1">
                     <div class="my-col" v-for="image in album.images">
                         <div class="card card-custom h-100">
                             <div class="card-body p-0 text-center">
-                                <div class="col-12 p-1 d-flex">
-                                    <img :src="`/public/img/uploads/${image.path}`" alt="image" class="img-thumbnail img-expand d-block align-self-center mx-auto" @click="showModal(image.path)">
+                                <div class="col-12 p-1 d-flex img-container" @click="showModal(image.path)">
+                                    <img :src="`/public/img/uploads/${image.path}`" alt="image" class="img-thumbnail img-expand d-block align-self-center mx-auto">
+                                    <div class="magnifier"></div>
                                 </div>
                             </div>
                         </div>

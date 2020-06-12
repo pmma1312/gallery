@@ -81,26 +81,42 @@ class AlbumController {
         $conn = Database::getInstance()->getConn();
         $albumName = urldecode($conn->real_escape_string(str_replace("/api/album/", "", Route::getRequestRoute())));
 
-        $query = "SELECT album.thumbnail_id, image.id, image.path, DATE_FORMAT(image.uploaded_at, '%d.%m.%Y') AS uploaded_at FROM album LEFT JOIN image_to_album ON album.id = image_to_album.album_id LEFT JOIN image ON image_to_album.image_id = image.id WHERE album.name = '" . $albumName . "' AND album.deleted = 0 AND (image.deleted = 0 OR image.deleted IS NULL)";
+        // Get album information
+        $query = "SELECT album.id, album.thumbnail_id, album.name, album.created_at FROM album WHERE album.name = '" . $albumName . "'";
         $result = $conn->query($query);
 
-        $data = [];
-
         if($result->num_rows > 0) {
+            $result = $result->fetch_array(MYSQLI_ASSOC);
+            $album = $result;
+
+            // Get images for album
+            $query = "SELECT image.id, image.path, DATE_FORMAT(image.uploaded_at, '%d.%m.%Y') AS uploaded_at FROM album LEFT JOIN image_to_album ON album.id = image_to_album.album_id LEFT JOIN image ON image_to_album.image_id = image.id WHERE image_to_album.album_id = " . $album['id'] . " AND album.deleted = 0 AND (image.deleted = 0 OR image.deleted IS NULL)";
+            $result = $conn->query($query);
+
+            $data = [];
             $images = [];
 
-            while(($res = $result->fetch_array(MYSQLI_ASSOC)) != null) {
-                if(!is_null($res['id']))
-                    array_push($images, $res);
+            if($result->num_rows > 0) {
+
+                while(($res = $result->fetch_array(MYSQLI_ASSOC)) != null) {
+                    if(!is_null($res['id']))
+                        array_push($images, $res);
+                }
+
             }
 
             $data = [
-                "name" => strip_tags($albumName),
+                "album" => $album,
                 "images" => $images
             ];
         } else {
             $data = [
-                "name" => "Not found!",
+                "album" => [
+                    "id" => 0,
+                    "name" => "Not found!",
+                    "thumbnail_id" => 0,
+                    "created_at" =>  "01-01-01 01:01:01"
+                ],
                 "images" => []
             ];
         }
@@ -111,7 +127,7 @@ class AlbumController {
     public static function update() {
         $response = DefaultHandler::unableToProccessRequest();
 
-        // TODO: FIX BUG WHERE UPDATE CAN CAUSE MULTIPLE ALBUMS TO HAVE THE SAME NAME
+        // TODO: FIX BUG WHERE UPDATE CAN CAUSE MULTIPLE ALBUMS TO HAVE THE SAME NAME (MAYBE FIXED???)
         if(isset($_POST['json'])) {
             $data = json_decode($_POST['json'], true);
 

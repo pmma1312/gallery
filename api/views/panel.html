@@ -61,6 +61,14 @@
             border-bottom-right-radius: .25rem;
         }
 
+        .my-col {
+            min-width: 10%;
+        }
+
+        .img-expand {
+            max-width: 200px !important;
+        }
+
         .my-albums {
             max-height: 250px;
             overflow-y: auto;
@@ -191,10 +199,22 @@
                             <h1>{{ albumName }}</h1>
                         </div>
                         <div class="col-12">
-                            <div class="form-group">
-                                <label for="name">Album Name:</label>
-                                <input type="text" name="name" v-model="albumName"
-                                    class="form-control bg-dark text-light">
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="name" class="mb-0">Album Name:</label>
+                                        <input type="text" name="name" v-model="albumName"
+                                            class="form-control bg-dark text-light">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 d-flex align-items-center flex-row-reverse">
+                                    <button class="btn d-inline-block m-2 mb-0 btn-secondary" @click="unselectAll">
+                                        Unselect All
+                                    </button>
+                                    <button class="btn d-inline-block m-2 mb-0 btn-secondary" @click="selectAll">
+                                        Select All
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </template>

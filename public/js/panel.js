@@ -115,9 +115,9 @@ const app = new Vue({
                 this.$refs.albummodal.checkBoxes = [];
                 this.$refs.albummodal.thumbnail = "";
                 this.albumName = "";
-
+                
                 if(response.data.data) {
-                    this.albums = response.data.data.concat(this.albums);
+                    this.albums = [ response.data.data ].concat(this.albums);
                 }
             })
             .catch(error => {
@@ -218,7 +218,7 @@ const app = new Vue({
                     this.$refs.albummodal.checkBoxes[item.id] = true;
                 });
 
-                this.$refs.albummodal.thumbnail = response.data.data.images[0].thumbnail_id;
+                this.$refs.albummodal.thumbnail = response.data.data.album.thumbnail_id;
 
                 this.modalAlbumBtnText = "Update Album"
 
@@ -227,6 +227,17 @@ const app = new Vue({
             .catch(error => {
                 console.log(error);
             });
+        },
+        selectAll() {
+            this.$refs.albummodal.images.forEach(item => {
+                this.$refs.albummodal.checkBoxes[item.id] = true;
+            });
+
+            this.$refs.albummodal.$forceUpdate();
+        },
+        unselectAll() {
+            this.$refs.albummodal.checkBoxes = [];
+            this.$refs.albummodal.$forceUpdate();
         },
         uploadFiles(e) {
             e.preventDefault();

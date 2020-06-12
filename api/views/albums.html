@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css">
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/css/base.css">
+    <style>
+        .img-thumbnail {
+            max-width: 250px;
+        }
+    </style>
 </head>
 <body class="bg-dark">
     <div class="container-fluid" id="root">
@@ -21,26 +26,24 @@
             <div class="col-12">
                 <div class="row">
                     <div class="my-col" v-for="album in albums">
-                        <div class="card bg-dark">
+                        <div class="card h-100 bg-dark">
                             <div class="card-header">
                                 <a :href="`/album/${album.name}`">
                                     <h3>{{ album.name }}</h3>
                                 </a>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body pb-0 d-flex align-items-center justify-content-center">
                                 <div class="row">
                                     <div class="col-12 text-center">
                                         <a :href="`/album/${album.name}`">
-                                            <img :src="`/public/img/uploads/${album.thumbnail}`" alt="thumbnail" class="img-thumbnail">
+                                            <img :src="`/public/img/uploads/${album.thumbnail}`" alt="thumbnail" class="img-thumbnail align-self-center">
                                         </a>
-                                    </div>
-                                    <div class="col-12">
-                                        <p class="d-inline-block m-0 mt-2 text-muted">
-                                            Created at <span class="text-light">{{ album.created_at }}</span> by <span class="text-light">{{ album.username }}</span>
-                                        </p>
                                     </div>
                                 </div>
                             </div>
+                            <p class="d-inline-block m-2 text-muted">
+                                Created at <span class="text-light">{{ album.created_at }}</span> by <span class="text-light">{{ album.username }}</span>
+                            </p>
                         </div>
                     </div>
                 </div>

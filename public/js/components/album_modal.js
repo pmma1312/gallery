@@ -44,7 +44,7 @@ export default {
                     <div class="card bg-dark">
                         <div class="card-body text-center">
                             <div class="form-group">
-                                <input type="checkbox" class="album-checkbox" :id="image.id" v-model="checkBoxes[image.id]"></input>
+                                <input type="checkbox" class="plus-minus" :id="image.id" v-model="checkBoxes[image.id]"></input>
                             </div>
                             <img class="img-album-sm" :src="\`/public/img/uploads/\${image.path}\`">
                             <div class="row mt-2">

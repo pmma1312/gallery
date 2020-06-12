@@ -5,7 +5,12 @@ const app = new Vue({
     el: "#root",
     data: {
         album: {
-            name: "Not found",
+            album: {
+                id: 0,
+                name: "Not Found",
+                thumbnail_id: 0,
+                created_at: "01-01-01 01:01:01"
+            },
             images: []
         },
         position: 0
@@ -58,7 +63,9 @@ const app = new Vue({
             } else if(e.keyCode == 39) {
                 // Right
                 this.nextImage();
-            } 
+            } else if(e.keyCode == 27) {
+                this.$refs.modal.hideModal();
+            }
         }
     },
     mounted() {
