@@ -275,7 +275,7 @@ const app = new Vue({
                     }
                 })
                 .then(response => {
-                    if(response.data.data.errors) {
+                    if(response.data.data.errors && response.data.data.errors > 0) {
                         Swal.fire(
                             "Warning!",
                             response.data.data.errors.join("<br>"),
