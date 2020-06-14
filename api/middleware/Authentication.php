@@ -7,6 +7,7 @@ class Authentication {
         if(Auth::isAuthorized()) {
             $next();
         } else {
+            self::writeLog();
             View::html("views/unauthorized.html");
         }
 
@@ -17,9 +18,15 @@ class Authentication {
         if(Auth::isAuthorized()) {
             $next();
         } else {
+            self::writeLog();
             View::json(DefaultHandler::unauthorizedAccess());
         }
 
+    }
+
+    private static function writeLog() : void {
+        $logger = Logger::getInstance();
+        $logger->write_log("unauthorized access on " . Route::getRequestRoute() , Logger::LOG_LEVEL_WARNING);
     }
 
 }

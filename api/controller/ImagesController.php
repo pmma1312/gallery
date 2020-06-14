@@ -5,38 +5,48 @@ class ImagesController {
     public static function uploadImages() {
         $response = DefaultHandler::unableToProccessRequest();
 
-        $user_id = Auth::getTokenVar("uid");
+        if (isset($_SERVER["CONTENT_LENGTH"])) {
+            if ($_SERVER["CONTENT_LENGTH"] < ((int) ini_get('post_max_size') * 1024 * 1024)) {
+                if(isset($_FILES['files'])) {
+                    $user_id = Auth::getTokenVar("uid");
 
-        $errors = [];
-        $successful = 0;
-
-        $files = self::restructureFilesArray($_FILES['files']);
-
-        $images = [];
-
-        foreach($files as $file) {
-            $image = new Image($file, $user_id);
-
-            if($image->validate()) {
-                if($image->save()) {
-                    array_push($images, [
-                        "id" => $image->getId(),
-                        "path" => $image->getPath(),
-                        "uploaded_at" => $image->getUploadedAt()
-                    ]);
-
-                    $successful++;
+                    $errors = [];
+                    $successful = 0;
+            
+                    $files = self::restructureFilesArray($_FILES['files']);
+            
+                    $images = [];
+            
+                    foreach($files as $file) {
+                        $image = new Image($file, $user_id);
+            
+                        if($image->validate()) {
+                            if($image->save()) {
+                                array_push($images, [
+                                    "id" => $image->getId(),
+                                    "path" => $image->getPath(),
+                                    "uploaded_at" => $image->getUploadedAt()
+                                ]);
+            
+                                $successful++;
+                            }
+                        } else {
+                            array_push($errors, implode("\n", $image->getErrors()));
+                        }
+                        
+                        $response = DefaultHandler::responseOk("Uploaded your files!", [
+                            "successful" =>  $successful,
+                            "errors" => $errors,
+                            "images" => $images
+                        ]);
+                    }
+                } else {
+                    $response = DefaultHandler::badRequest("Missing files!");
                 }
             } else {
-                array_push($errors, implode("\n", $image->getErrors()));
+                $response = DefaultHandler::badRequest("The max post size of '" . ((int) ini_get('post_max_size') * 1024 * 1024) . "' has been exceeded!");
             }
-            
-            $response = DefaultHandler::responseOk("Uploaded your files!", [
-                "successful" =>  $successful,
-                "errors" => $errors,
-                "images" => $images
-            ]);
-        }
+        } 
 
         View::json($response);
     }

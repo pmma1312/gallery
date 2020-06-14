@@ -46,7 +46,7 @@ class UserController {
                     ]);
                 } else {
                     $logger = Logger::getInstance();
-                    $logger->write_log("unauthorized access on site " . Route::getRequestRoute(), Logger::LOG_LEVEL_WARNING);
+                    $logger->write_log("failed login attempt for user " . $user->getUsername() , Logger::LOG_LEVEL_WARNING);
                     $response = DefaultHandler::badRequest("Invalid username or password!");
                 }
             } else {
