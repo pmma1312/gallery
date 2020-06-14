@@ -3,7 +3,8 @@ export default {
     data: function() {
         return {
             modalImage: "",
-            showImageModal: false
+            showImageModal: false,
+            isFullScreen: false
         }
     },
     methods:  {
@@ -38,16 +39,30 @@ export default {
         makeFullScreen() {
             var divObj = this.$refs.imgModal;
 
-            if (divObj.requestFullscreen) {
-                divObj.requestFullscreen();
-            } else if (divObj.msRequestFullscreen) {
-                divObj.msRequestFullscreen();               
-            } else if (divObj.mozRequestFullScreen) {
-                divObj.mozRequestFullScreen();      
-            } else if (divObj.webkitRequestFullscreen) {
-                divObj.webkitRequestFullscreen();       
+            if(!this.isFullScreen) {
+                if (divObj.requestFullscreen) {
+                    divObj.requestFullscreen();
+                } else if (divObj.msRequestFullscreen) {
+                    divObj.msRequestFullscreen();               
+                } else if (divObj.mozRequestFullScreen) {
+                    divObj.mozRequestFullScreen();      
+                } else if (divObj.webkitRequestFullscreen) {
+                    divObj.webkitRequestFullscreen();       
+                } 
+
+                this.isFullScreen = true;
             } else {
-                console.log("Fullscreen API is not supported");
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) { 
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) { 
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+
+                this.isFullScreen = false;
             }
         } 
     },
@@ -71,7 +86,7 @@ export default {
                 <div class="col-12">
                     <div class="row mb-2">
                         <div class="col-12 d-flex align-items-center justify-content-center">
-                            <img :src="\`/public/img/uploads/\${modalImage}\`" alt="image" class="modalImage mx-auto d-block" @click="makeFullScreen" ref="imgModal">
+                            <img :src="\`/public/img/uploads/\${modalImage}\`" alt="image" class="modalImage mx-auto d-block" @dblclick="makeFullScreen" ref="imgModal">
                         </div>
                     </div>
                 </div>
