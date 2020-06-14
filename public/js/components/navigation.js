@@ -17,12 +17,6 @@ export default {
                     icon: "/public/img/icons/albums.png",
                     auth: false
                 },
-                //{
-                //    name: "Images",
-                //    route: "/images",
-                //    icon: "/public/img/icons/images.png",
-                //    auth: false
-                //},
                 {
                     name: "Panel",
                     route: "/panel",

@@ -35,9 +35,4 @@ Route::get("/register", function() {
     View::html("views/register.html");
 });
 
-Route::get("/images", function() {
-    View::html("views/images.html");
-});
-
-
 ?>
