@@ -19,7 +19,7 @@ class Album {
     }
 
     private function load() : void {
-        $query = "SELECT * FROM album WHERE ";
+        $query = "SELECT * FROM album WHERE deleted = 0 AND ";
 
         if(!$this->exists()) {
             $query .= "name = '" . $this->name . "'";
@@ -59,18 +59,25 @@ class Album {
         return !is_null($this->id);
     }
 
-    public function validate() : bool {
+    public function validate($data = null) : bool {
         $isValid = true;
 
-        if(strlen($this->name) < 1) {
+        if(is_null($data)) {
+            $name = $this->name;
+        } else {
+            $name = $data['name'];
+        }
+
+        if(strlen($name) < 1) {
             $isValid = false;
             array_push($this->errors, "Your album name has to be atleast 1 character long!");
         }
 
-        if(strlen($this->name) > 24) {
+        if(strlen($name) > 24) {
             $isValid = false;
-            array_push($this->errors, "Your album name has to be atleast 1 character long!");
+            array_push($this->errors, "Your album name can't be longer than 24 characters!");
         }
+
 
         return $isValid;
     }

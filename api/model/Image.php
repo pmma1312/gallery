@@ -8,7 +8,7 @@ class Image {
     private $file;
     private $path;
     private $uploaded_at;
-    private $error;
+    private $errors = [];
 
     public function __construct(array $file, int $user_id) {
         $this->conn = Database::getInstance()->getConn();
@@ -20,7 +20,7 @@ class Image {
         $isValid = true;
 
         if(filesize($this->file['tmp_name']) > 5242880) {
-            array_push($this->error, "The max size for the file '" . $this->file['name'] . "' is 5MB");
+            array_push($this->errors, "The max size for the file '" . $this->file['name'] . "' is 5MB.");
             $isValid = false;
         }
 
@@ -28,7 +28,7 @@ class Image {
         $type = finfo_file($finfo, $this->file['tmp_name']);
 
         if (isset($type) && !in_array($type, array("image/png", "image/jpg", "image/jpeg", "image/gif"))) {
-            array_push($this->error, "Invalid file type on image '" . $this->file['name'] . "', allowed are png/jpg/gif images");
+            array_push($this->errors, "Invalid file type on file '" . $this->file['name'] . "', allowed are png/jpg/gif files.");
             $isValid = false;
         }
 

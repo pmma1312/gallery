@@ -155,6 +155,9 @@
                             <div class="card bg-dark m-2">
                                 <div class="card-header">
                                     <h4>My Images</h4>
+                                    <p class="text-muted m-0">
+                                        Total: {{ images.length }} Images
+                                    </p>
                                 </div>
                                 <div class="card-body my-images" ref="imagesContainer">
                                     <transition-group name="fade" tag="div" class="row d-flex">
@@ -204,7 +207,7 @@
                                     <div class="form-group">
                                         <label for="name" class="mb-0">Album Name:</label>
                                         <input type="text" name="name" v-model="albumName"
-                                            class="form-control bg-dark text-light">
+                                            class="form-control bg-dark text-light" minlength="1" maxlength="24">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 d-flex align-items-center flex-row-reverse">

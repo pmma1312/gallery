@@ -82,7 +82,7 @@ class AlbumController {
         $albumName = urldecode($conn->real_escape_string(str_replace("/api/album/", "", Route::getRequestRoute())));
 
         // Get album information
-        $query = "SELECT album.id, album.thumbnail_id, album.name, album.created_at FROM album WHERE album.name = '" . $albumName . "'";
+        $query = "SELECT album.id, album.thumbnail_id, album.name, album.created_at FROM album WHERE album.deleted = 0 AND album.name = '" . $albumName . "'";
         $result = $conn->query($query);
 
         if($result->num_rows > 0) {
@@ -139,20 +139,24 @@ class AlbumController {
 
                 $album = new Album(null, null, null, $album_id);
 
-                if($checkDuplicateAlbum->getName() == $album->getName() || ($checkDuplicateAlbum->getId() == $album->getId() || !$checkDuplicateAlbum->exists())) {
-                    if($album->exists()) {
-                        if($album->getUserId() == $user_id) {
-                            if($album->update($data)) {
-                                $response = DefaultHandler::responseOk("Successfully updated the album!");
+                if($album->validate($data)) {
+                    if($checkDuplicateAlbum->getName() == $album->getName() || ($checkDuplicateAlbum->getId() == $album->getId() || !$checkDuplicateAlbum->exists())) {
+                        if($album->exists()) {
+                            if($album->getUserId() == $user_id) {
+                                if($album->update($data)) {
+                                    $response = DefaultHandler::responseOk("Successfully updated the album!");
+                                }
+                            } else {
+                                $response = DefaultHandler::badRequest("You can only edit your own albums.");
                             }
                         } else {
-                            $response = DefaultHandler::badRequest("You can only edit your own albums.");
+                            $response = DefaultHandler::badRequest("Invalid album id.");
                         }
                     } else {
-                        $response = DefaultHandler::badRequest("Invalid album id.");
+                        $response = DefaultHandler::badRequest("An album with this name exists already!");
                     }
                 } else {
-                    $response = DefaultHandler::badRequest("An album with this name exists already!");
+                    $response = DefaultHandler::badRequest(implode("\n", $album->getErrors()));
                 }
             } else {
                 $response = DefaultHandler::badRequest("Missing data.");

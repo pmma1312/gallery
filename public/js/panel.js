@@ -188,22 +188,33 @@ const app = new Vue({
             });
         },
         deleteAlbum(id) {
-            axios.delete(`/api/album/${id}`)
-            .then(response => {
-                Swal.fire(
-                    "Success!",
-                    response.data.message,
-                    "success"
-                );
-
-                this.albums = this.albums.filter(item => item.id != id);
-            })
-            .catch(error => {
-                Swal.fire(
-                    "Error!",
-                    error.response.data.message,
-                    "error"
-                );
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Your album will be lost forever.",
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No don't"
+            }).then((result) => {
+                if(result.value) {
+                    axios.delete(`/api/album/${id}`)
+                    .then(response => {
+                        Swal.fire(
+                            "Success!",
+                            response.data.message,
+                            "success"
+                        );
+        
+                        this.albums = this.albums.filter(item => item.id != id);
+                    })
+                    .catch(error => {
+                        Swal.fire(
+                            "Error!",
+                            error.response.data.message,
+                            "error"
+                        );
+                    });
+                }
             });
         },
         editAlbum(name, id) {
@@ -264,10 +275,10 @@ const app = new Vue({
                     }
                 })
                 .then(response => {
-                    if(response.data.data.error && response.data.data.error > 0) {
+                    if(response.data.data.errors) {
                         Swal.fire(
                             "Warning!",
-                            response.data.data.error.join("\n"),
+                            response.data.data.errors.join("<br>"),
                             "warning"
                         );
                     } else {
@@ -308,7 +319,7 @@ const app = new Vue({
         deleteImage(id) {
             Swal.fire({
                 title: "Are you sure?",
-                text: "Your image will forever be lost.",
+                text: "Your image will be lost forever.",
                 showConfirmButton: true,
                 showCancelButton: true,
                 confirmButtonText: "Yes, delete it!",

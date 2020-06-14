@@ -34,7 +34,22 @@ export default {
             if(e.keyCode == 27) {
                 this.hideModal();
             }
-        }
+        },
+        makeFullScreen() {
+            var divObj = this.$refs.imgModal;
+
+            if (divObj.requestFullscreen) {
+                divObj.requestFullscreen();
+            } else if (divObj.msRequestFullscreen) {
+                divObj.msRequestFullscreen();               
+            } else if (divObj.mozRequestFullScreen) {
+                divObj.mozRequestFullScreen();      
+            } else if (divObj.webkitRequestFullscreen) {
+                divObj.webkitRequestFullscreen();       
+            } else {
+                console.log("Fullscreen API is not supported");
+            }
+        } 
     },
     template: `
     <transition name="out">
@@ -56,7 +71,7 @@ export default {
                 <div class="col-12">
                     <div class="row mb-2">
                         <div class="col-12 d-flex align-items-center justify-content-center">
-                            <img :src="\`/public/img/uploads/\${modalImage}\`" alt="image" class="modalImage mx-auto d-block">
+                            <img :src="\`/public/img/uploads/\${modalImage}\`" alt="image" class="modalImage mx-auto d-block" @click="makeFullScreen" ref="imgModal">
                         </div>
                     </div>
                 </div>

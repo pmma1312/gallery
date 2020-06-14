@@ -24,6 +24,10 @@
             user-select: none; /* Standard */
         }
 
+        .img-thumbnail {
+            max-height: 250px !important;
+        }
+
         .icon:hover {
             cursor: pointer;
         }
@@ -41,9 +45,8 @@
         }
 
         .my-col {
-            padding: 4px !important;
+            padding: .5rem !important;
             min-width: 0% !important;
-            padding-bottom: 1rem !important;
         }
     </style>
 </head>
@@ -65,7 +68,7 @@
                         <div class="card card-custom h-100">
                             <div class="card-body p-0 text-center">
                                 <div class="col-12 p-1 d-flex img-container" @click="showModal(image.path)">
-                                    <img :src="`/public/img/uploads/${image.path}`" alt="image" class="img-thumbnail img-expand d-block align-self-center mx-auto">
+                                    <img :src="`/public/img/uploads/${image.path}`" alt="image" class="img-thumbnail img-expand d-block align-self-center mx-auto" loading="lazy">
                                     <div class="magnifier"></div>
                                 </div>
                             </div>
