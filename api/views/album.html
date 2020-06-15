@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,10 +19,6 @@
             width: 42px;
             height: 42px;
             margin: 12px;
-            -webkit-user-select: none; /* Safari */        
-            -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* IE10+/Edge */
-            user-select: none; /* Standard */
         }
 
         .img-thumbnail {
@@ -50,6 +47,7 @@
         }
     </style>
 </head>
+
 <body class="bg-dark">
     <div class="container-fluid" id="root">
         <div class="row">
@@ -60,7 +58,8 @@
                 <h1 class="display-4 m-1 mt-3">{{ album.album.name }}</h1>
             </div>
             <div class="col-12">
-                <img src="/public/img/icons/download.png" alt="download" title="Download Album" class="icon-modal m-1 mt-3" @click="downloadAlbum">
+                <img src="/public/img/icons/download.png" alt="download" title="Download Album"
+                    class="icon-modal m-1 mt-3" @click="downloadAlbum">
             </div>
             <div class="col-12">
                 <div class="row m-1">
@@ -68,7 +67,9 @@
                         <div class="card card-custom h-100">
                             <div class="card-body p-0 text-center">
                                 <div class="col-12 p-1 d-flex img-container" @click="showModal(image.path)">
-                                    <img :src="`/public/img/uploads/${image.path}`" alt="image" class="img-thumbnail img-expand d-block align-self-center mx-auto" loading="lazy">
+                                    <img :src="`/public/img/uploads/${image.path}`" alt="image"
+                                        class="img-thumbnail img-expand d-block align-self-center mx-auto"
+                                        loading="lazy">
                                     <div class="magnifier"></div>
                                 </div>
                             </div>
@@ -79,19 +80,23 @@
             <div class="col-12">
                 <modal ref="modal">
                     <template v-slot:additional>
-                        <img src="/public/img/icons/play.png" alt="play" class="icon-modal m-2" @click="playSlideshow" title="play" v-if="!isPlaying">
-                        <img src="/public/img/icons/pause.png" alt="play" class="icon-modal m-2" @click="stopSlideshow" title="pause" v-else>
+                        <img src="/public/img/icons/play.png" alt="play" class="icon-modal m-2" @click="playSlideshow"
+                            title="play" v-if="!isPlaying">
+                        <img src="/public/img/icons/pause.png" alt="play" class="icon-modal m-2" @click="stopSlideshow"
+                            title="pause" v-else>
                     </template>
                     <template v-slot:bottom>
                         <div class="row sticky-bottom">
                             <div class="col-4">
-                                <img src="/public/img/icons/previous.png" alt="previous" class="icon" @click="previousImage">
+                                <img src="/public/img/icons/previous.png" alt="previous" class="icon"
+                                    @click="previousImage">
                             </div>
                             <div class="col-4 text-center align-self-center">
                                 {{ position + 1 }} / {{ album.images.length }}
                             </div>
                             <div class="col-4 text-right p-0">
-                                <img src="/public/img/icons/next.png" alt="previous" class="icon mr-2" @click="nextImage">
+                                <img src="/public/img/icons/next.png" alt="previous" class="icon mr-2"
+                                    @click="nextImage">
                             </div>
                         </div>
                     </template>
@@ -105,4 +110,5 @@
     <script src="/public/js/lib/jszip.js"></script>
     <script src="/public/js/album.js" type="module"></script>
 </body>
+
 </html>

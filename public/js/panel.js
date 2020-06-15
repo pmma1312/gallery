@@ -343,11 +343,13 @@ const app = new Vue({
             });
         },
         infinityScroll() {
-            this.$refs.imagesContainer.onscroll = () => {
-                let bottomOfDiv = this.$refs.imagesContainer.scrollTop + this.$refs.imagesContainer.clientHeight ===  this.$refs.imagesContainer.scrollHeight;
-
-                if (bottomOfDiv) {
-                    this.loadImages();
+            if(this.$refs.imagesContainer) {
+                this.$refs.imagesContainer.onscroll = () => {
+                    let bottomOfDiv = this.$refs.imagesContainer.scrollTop + this.$refs.imagesContainer.clientHeight ===  this.$refs.imagesContainer.scrollHeight;
+    
+                    if (bottomOfDiv) {
+                        this.loadImages();
+                    }
                 }
             }
         },

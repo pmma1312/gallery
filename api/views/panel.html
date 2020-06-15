@@ -148,6 +148,9 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <h2 v-if="albums.length < 1">
+                                        No albums found😪
+                                    </h2>
                                 </div>
                             </div>
                         </div>
@@ -155,11 +158,8 @@
                             <div class="card bg-dark mt-2">
                                 <div class="card-header">
                                     <h4>My Images</h4>
-                                    <p class="text-muted m-0">
-                                        Total: {{ images.length }} Images
-                                    </p>
                                 </div>
-                                <div class="card-body my-images" ref="imagesContainer">
+                                <div class="card-body my-images" ref="imagesContainer" :class="(images.length < 1) ? 'p-0' : 'p-3'">
                                     <transition-group name="fade" tag="div" class="row d-flex">
                                         <div class="my-col" v-for="image in images" v-bind:key="image.id">
                                             <div class="card bg-dark h-100">
@@ -189,6 +189,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                <h2 v-if="images.length < 1" class="m-4">
+                                    No images found😪
+                                </h2>
                             </div>
                         </div>
                     </div>

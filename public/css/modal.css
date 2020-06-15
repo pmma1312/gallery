@@ -38,10 +38,6 @@
     width: 32px;
     height: 32px;
     transition: filter .2s ease-in;
-    -webkit-user-select: none; /* Safari */        
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
-    user-select: none; /* Standard */
 }
 
 .icon-modal:hover {
