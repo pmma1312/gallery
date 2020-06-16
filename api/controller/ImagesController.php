@@ -16,7 +16,9 @@ class ImagesController {
                     $files = self::restructureFilesArray($_FILES['files']);
             
                     $images = [];
-            
+                    
+                    // Go through each uploaded file and do the necessary stuff 
+                    // to publish it
                     foreach($files as $file) {
                         $image = new Image($file, $user_id);
             
@@ -51,7 +53,7 @@ class ImagesController {
         View::json($response);
     }
 
-    private static function restructureFilesArray(array $files) {
+    private static function restructureFilesArray(array $files) : array {
         $output = [];
 
         foreach ($files as $attrName => $valuesArray) {
@@ -63,7 +65,7 @@ class ImagesController {
         return $output;
     }
 
-    public static function listImagesForUser() {
+    public static function listImagesForUser() : void {
         $conn = Database::getInstance()->getConn();
         $query = "SELECT image.id, image.path, DATE_FORMAT(image.uploaded_at, '%d.%m.%Y') AS uploaded_at FROM image WHERE image.deleted = 0 AND image.user_id = " . Auth::getTokenVar("uid") . " ORDER BY image.id DESC";
         $result = $conn->query($query);
@@ -79,7 +81,7 @@ class ImagesController {
         View::json(DefaultHandler::responseOk("Successfully listed your files!", $data));
     }
 
-    public static function listImagesForUserLimit() {
+    public static function listImagesForUserLimit() : void {
         $routeVars = explode("/", str_replace("/api/user/images/", "", Route::getRequestRoute()));
 
         // SQL injection should not be possible because the route only allows numbers

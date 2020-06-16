@@ -8,6 +8,7 @@ class Image {
     private $file;
     private $path;
     private $uploaded_at;
+    private $isOverMaxSize = false;
     private $errors = [];
 
     public function __construct(array $file, int $user_id) {
@@ -20,8 +21,9 @@ class Image {
         $isValid = true;
 
         if(filesize($this->file['tmp_name']) > 5242880) {
-            array_push($this->errors, "The max size for the file '" . $this->file['name'] . "' is 5MB.");
-            $isValid = false;
+            //array_push($this->errors, "The max size for the file '" . $this->file['name'] . "' is 5MB.");
+            //$isValid = false;
+            $this->isOverMaxSize = true;
         }
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -49,6 +51,43 @@ class Image {
                 $this->id = $this->conn->insert_id;
                 $this->path = $filepath;
                 $this->uploaded_at = date("d.m.Y");
+
+                // Resize the file if it's too big
+                if($this->isOverMaxSize) {        
+                    $path = $basepath . $filepath;
+
+                    switch($extension) {
+                        case "jpeg" || "jpg":
+                            $ressource = imagecreatefromjpeg($path);
+                            break;
+                        case "png":
+                            $ressource = imagecreatefrompng($path);
+                            break;
+                        case "gif":
+                            $ressource = imagecreatefromgif($path);
+                            break;
+                        default:
+                            die();
+                            break;
+                    }
+        
+                    $ressource = imagescale($ressource, Config::IMAGE_WIDTH);
+        
+                    switch($extension) {
+                        case "jpeg" || "jpg":
+                            imagejpeg($ressource, $path);
+                            break;
+                        case "png":
+                            imagepng($ressource, $path);
+                            break;
+                        case "gif":
+                            imagegif($ressource, $path);
+                            break;
+                        default:
+                            die();
+                            break;
+                    }        
+                }
 
                 $isSaved = true;
             }
