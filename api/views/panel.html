@@ -165,10 +165,20 @@
                                             <div class="card bg-dark h-100">
                                                 <div class="card-body p-3 text-center">
                                                     <div class="row">
-                                                        <div class="col-12 text-right">
-                                                            <img src="/public/img/icons/delete.png" alt="delete"
-                                                                title="delete" class="icon-delete"
-                                                                @click="deleteImage(image.id)">
+                                                        <div class="col-12">
+                                                            <div class="row">
+                                                                <div class="col-6 text-left">
+                                                                    <div class="form-group">
+                                                                        <label for="private">Private: </label>
+                                                                        <input type="checkbox" name="private" :id="'visibility' + image.id" :checked="image.private" @change="changeVisibility(image.id)">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6 text-right">
+                                                                    <img src="/public/img/icons/delete.png" alt="delete"
+                                                                    title="delete" class="icon-delete"
+                                                                    @click="deleteImage(image.id)">
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="col-12 d-flex">
                                                             <img :src="`/public/img/uploads/${image.path}`" alt="image"

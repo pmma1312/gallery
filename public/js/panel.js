@@ -359,6 +359,26 @@ const app = new Vue({
             this.albumName = "New Album";
             this.$refs.albummodal.thumbnail = 0;
             this.$refs.albummodal.showModal();
+        },
+        changeVisibility(id) {
+            let checkbox = document.getElementById('visibility' + id);
+
+            let url;
+            if(checkbox.checked) {
+                url = `/api/image/1/${id}`;
+            } else {
+                url = `/api/image/0/${id}`;
+            }
+
+            axios.put(url)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                if(error.response) {
+                    console.log(error.response);
+                }
+            });
         }
     },
     mounted() {
