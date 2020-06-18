@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/base.css">
+    <link rel="stylesheet" href="/public/css/modal.css">
+    <style>
+        .card-custom {
+            border: 0px !important;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 8px;
+        }
+
+        .my-col {
+            padding: .5rem !important;
+            min-width: 0% !important;
+        }
+
+        .loading-gif {
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+</head>
+
+<body class="bg-dark">
+    <div class="container-fluid" id="root">
+        <div class="row">
+            <div class="col-12">
+                <navbar></navbar>
+            </div>
+            <div class="col-12">
+                <h1 class="display-4 mt-3">Images</h1>
+            </div>
+            <div class="col-12 mt-2">
+                <div class="row">
+                    <div class="my-col" v-for="image in images">
+                        <div class="card card-custom h-100">
+                            <div class="card-body p-0 text-center">
+                                <div class="col-12 d-flex img-container" @click="showModal(image.path)">
+                                    <img :src="`/public/img/uploads/${image.path}`" alt="image"
+                                        class="img-thumbnail img-expand d-block align-self-center mx-auto"
+                                        loading="lazy">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-center" v-show="isLoading">
+                            <img src="/public/img/icons/loadingImages.gif" alt="Loading..." class="loading-gif">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <modal ref="modal"></modal>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/public/js/lib/axios.min.js"></script>
+    <script src="/public/js/lib/vue.js"></script>
+    <script src="/public/js/images.js" type="module"></script>
+</body>
+
+</html>

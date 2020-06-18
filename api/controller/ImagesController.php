@@ -2,6 +2,10 @@
 
 class ImagesController {
 
+    public static function view() {
+        View::html("views/images.html");
+    }
+
     public static function uploadImages() {
         $response = DefaultHandler::unableToProccessRequest();
 
@@ -71,6 +75,20 @@ class ImagesController {
         // SQL injection should not be possible because the route only allows numbers
         $limit = $routeVars[0];
         $offset = $routeVars[1];
+
+        $conn = Database::getInstance()->getConn();
+        $query = "SELECT user.username, image.id, image.path, DATE_FORMAT(image.uploaded_at, '%d.%m.%Y') AS uploaded_at FROM image JOIN user ON image.user_id = user.id WHERE image.deleted = 0 AND image.private = 0 ORDER BY image.id DESC LIMIT $limit OFFSET $offset";
+        $result = $conn->query($query);
+
+        $data = [];
+
+        if($result->num_rows > 0) {
+            while(($res = $result->fetch_array(MYSQLI_ASSOC)) != null) {
+                array_push($data, $res);
+            }
+        }
+
+        View::json(DefaultHandler::responseOk("Successfully listed the images!", $data));
     }
 
     public static function listImagesForUser() {

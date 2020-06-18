@@ -18,6 +18,12 @@ export default {
                     auth: false
                 },
                 {
+                    name: "Images",
+                    route: "/images",
+                    icon: "/public/img/icons/images.png",
+                    auth: false
+                },
+                {
                     name: "Panel",
                     route: "/panel",
                     icon: "/public/img/icons/panel.png",

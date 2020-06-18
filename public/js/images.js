@@ -1,25 +1,28 @@
 import navbar from './components/navigation.js';
+import modal from './components/modal.js';
 
 const app = new Vue({
     el: "#root",
     data: {
-        limit: 30,
+        images: [],
+        limit: 20,
         offset: 0,
-        albums: [],
+        isLoading: false,
         noNewData: 0
     },
     components: {
-        navbar
+        navbar,
+        modal
     },
     methods: {
-        loadAlbums() {
-            // Check if we received new data on the latest requests, else abort it
+        loadImages() {
             if(this.noNewData < 3) {
-                axios.get(`/api/albums/${this.limit}/${this.offset}`)
+                this.isLoading = true;
+                axios.get(`/api/images/${this.limit}/${this.offset}`)
                 .then(response => {
                     if(response.data.data) {
                         response.data.data.forEach(element => {
-                            this.albums.push(element);
+                            this.images.push(element);
                         });
     
                         this.offset += this.limit;
@@ -36,21 +39,28 @@ const app = new Vue({
                             "error"
                         );
                     }
+                })
+                .finally(() => {
+                    this.isLoading = false;
                 });
             }
         },
-        inifintyScroll() {
+        showModal(path) {
+            this.$refs.modal.showModal(path);
+            this.position = this.getImageIndex();
+        },
+        infinityScroll() {
             window.onscroll = () => {
                 let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
             
                 if (bottomOfWindow) {
-                    this.loadAlbums();
+                    this.loadImages();
                 }
             }
         }
     },
     mounted() {
-        this.loadAlbums();
-        this.inifintyScroll();
+        this.loadImages();
+        this.infinityScroll();
     }
 });

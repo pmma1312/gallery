@@ -14,6 +14,10 @@ Route::get("/album/(.*?)+", function() {
     AlbumController::view();
 });
 
+Route::get("/images", function() {
+    ImagesController::view();
+});
+
 Route::get("/panel", function() {
     if(Auth::isAuthorized()) {
         View::html("views/panel.html");
