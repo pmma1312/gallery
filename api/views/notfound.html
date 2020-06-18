@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="icon" href="/public/img/favicon.png">
+    <title>Bad Request</title>
+    <style>
+        body,html {
+            height: 100%;
+        }
+
+        h1 {
+            display: inline;
+            color: white;
+        }
+
+        .status-code {
+            border-right: 3px solid rgba(255, 254, 254, 0.685);
+            padding-right: 16px !important;
+            margin-right: 16px !important;
+        }
+
+        .color {
+            background: #343a40;
+            height: 100%;
+        }
+
+        @media (max-width: 1200px) {
+            h1 {
+                display: block;
+            }
+
+            .status-code {
+                border-right: 0px solid rgba(97, 97, 97, 0.63);
+                padding-right: 0px !important;
+                margin-right: 0px !important;
+            }
+        }
+    </style>
+</head>
+<body class="color">
+    <div class="container d-flex h-100">
+        <div class="row align-self-center w-100">
+            <div class="col-12 col-md-8 mx-auto text-center mb-5">
+                <h1 class="display-1 status-code align-middle">404</h1><h1 class="display-4 align-middle status-message">Not Found</h1>
+            </div>
+            <div class="col-12 col-md-8 mx-auto text-center">
+                <p class="text-light">You will be redirected in <span id="seconds">5</span> seconds</p>
+                <p class="text-light">
+                    Click <a href="/">here</a> if the redirection doesn't work
+                </p>
+            </div>
+        </div>
+    </div>
+    <script>
+        var spanSeconds = document.getElementById("seconds");
+        var seconds = parseInt(spanSeconds.innerHTML);
+
+        window.setInterval(() => {
+            spanSeconds.innerHTML = seconds;
+            seconds--;
+        }, 1000);
+
+        setTimeout(e => {
+            window.location.href = "/";
+        }, 5000);
+
+        var textWrapper = document.querySelector('.status-message');
+        textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+        anime.timeline({loop: false})
+        .add({
+            targets: '.status-message .letter',
+            scale: [4,1],
+            opacity: [0,1],
+            translateZ: 0,
+            easing: "easeOutExpo",
+            duration: 6000,
+            delay: (el, i) => 80*i
+        }).add({
+            targets: '.ml2',
+            opacity: 0,
+            duration: 1000,
+            easing: "easeOutExpo",
+            delay: 5000
+        });
+    </script>
+</body>
+</html>

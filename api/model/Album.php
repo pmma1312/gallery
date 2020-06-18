@@ -42,9 +42,7 @@ class Album {
     public function delete() : bool {
         $isDeleted = false;
 
-        $query = "DELETE FROM image_to_album WHERE album_id = " . $this->id;
-
-        $this->conn->query($query);
+        $this->deleteImagesFromAlbum();
 
         $query = "UPDATE album SET deleted = 1 WHERE id = " . $this->id;
 
@@ -109,9 +107,7 @@ class Album {
         $query = sprintf("UPDATE album SET %s WHERE id = %d", implode(",", $rows), $this->id);
 
         if($this->conn->query($query)) {
-            $query = "DELETE FROM image_to_album WHERE image_to_album.album_id = " . $this->id;
-
-            $this->conn->query($query);
+            $this->deleteImagesFromAlbum();
 
             foreach($data['image_ids'] as $image_id) {
                 $this->addImageToAlbum($image_id);
@@ -121,6 +117,11 @@ class Album {
         }
 
         return $isUpdated;
+    }
+
+    private function deleteImagesFromAlbum() : void {
+        $query = "DELETE FROM image_to_album WHERE album_id = " . $this->id;
+        $this->conn->query($query);
     }
 
     public function addImageToAlbum($image_id) : void {

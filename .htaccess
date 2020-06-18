@@ -3,3 +3,4 @@ RewriteRule ^public/ - [L,NC]
 RewriteCond %{REQUEST_URI} !^/api/web.php
 RewriteRule ^api/(.*)$  api/api.php [L]
 RewriteRule ^(.*)$ api/web.php [L]
+Options -Indexes

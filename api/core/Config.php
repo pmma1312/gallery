@@ -15,6 +15,7 @@ class Config {
     const MAX_REQUESTS_SECOND = 1; # The treshold for requests in seconds
     const FORCE_HTTPS = false;
     const TOKEN_SECRET = "D9G+c>/mfR}NaMLtra-rS+S^A=2D'\g";
+    const IMAGE_WIDTH = 800;
 
     # Database configuration
     const DB_HOST = "localhost";

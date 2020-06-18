@@ -21,11 +21,13 @@ const app = new Vue({
             .then(response => {
                 setCookie("token", `Bearer ${response.data.data.token}`, "30");
 
-                Swal.fire(
-                    "Success!",
-                    "The login has been successful!",
-                    "success"
-                ).then(result => {
+                Swal.fire({
+                    title: "Success!",
+                    text: "The login has been successful!",
+                    icon: "success",
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(result => {
                     window.location.replace("/panel");
                 });
             })

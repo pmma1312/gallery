@@ -147,7 +147,7 @@ class Route {
     
     public static function notFound() : void {
         if(self::$NOT_FOUND) {
-            View::json(DefaultHandler::routeNotFound());
+            View::html($_SERVER['DOCUMENT_ROOT'] . "/api/views/notfound.html");
         }
     }
 
