@@ -21,9 +21,27 @@
             min-width: 0% !important;
         }
 
+        .img-thumbnail {
+            max-height: 250px !important;
+        }
+
+        .modalImage {
+            max-height: 85vh !important;
+        }
+
         .loading-gif {
             width: 40px;
             height: 40px;
+        }
+
+        .icon {
+            width: 42px;
+            height: 42px;
+            margin: 12px;
+        }
+
+        .icon:hover {
+            cursor: pointer;
         }
     </style>
 </head>
@@ -57,7 +75,23 @@
                     </div>
                 </div>
                 <div class="col-12">
-                    <modal ref="modal"></modal>
+                    <modal ref="modal">
+                        <template v-slot:bottom>
+                            <div class="row sticky-bottom">
+                                <div class="col-4">
+                                    <img src="/public/img/icons/previous.png" alt="previous" class="icon"
+                                        @click="previousImage">
+                                </div>
+                                <div class="col-4 text-center align-self-center">
+                                    {{ position + 1 }} / {{ images.length }}
+                                </div>
+                                <div class="col-4 text-right p-0">
+                                    <img src="/public/img/icons/next.png" alt="previous" class="icon mr-2"
+                                        @click="nextImage">
+                                </div>
+                            </div>
+                        </template>
+                    </modal>
                 </div>
             </div>
         </div>

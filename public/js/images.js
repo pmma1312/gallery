@@ -8,7 +8,8 @@ const app = new Vue({
         limit: 20,
         offset: 0,
         isLoading: false,
-        noNewData: 0
+        noNewData: 0,
+        position: 0
     },
     components: {
         navbar,
@@ -57,10 +58,41 @@ const app = new Vue({
                     this.loadImages();
                 }
             }
+        },
+        previousImage() {
+            let index = this.getImageIndex();
+
+            if((index - 1) > -1) {
+                this.position = index - 1;
+                this.$refs.modal.modalImage = this.images[index - 1].path;
+            }
+        },
+        nextImage() {
+            let index = this.getImageIndex();
+
+            if((index + 1) < this.images.length) {
+                this.position = index + 1;
+                this.$refs.modal.modalImage = this.images[index + 1].path;
+            } else {
+                this.loadImages();
+            }
+        },
+        getImageIndex() {
+            return this.images.findIndex(image => image.path == this.$refs.modal.modalImage);
+        },
+        keydown(e) {
+            if(e.keyCode == 37) {
+                // Left
+                this.previousImage();
+            } else if(e.keyCode == 39) {
+                // Right
+                this.nextImage();
+            }
         }
     },
     mounted() {
         this.loadImages();
         this.infinityScroll();
+        document.addEventListener("keydown", this.keydown);
     }
 });
