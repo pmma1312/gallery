@@ -68,31 +68,31 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12 text-center" v-show="isLoading">
-                            <img src="/public/img/icons/loadingImages.gif" alt="Loading..." class="loading-gif">
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center mt-2 mb-2" v-show="isLoading">
+                        <img src="/public/img/icons/loadingImages.gif" alt="Loading..." class="loading-gif">
                     </div>
                 </div>
-                <div class="col-12">
-                    <modal ref="modal">
-                        <template v-slot:bottom>
-                            <div class="row sticky-bottom">
-                                <div class="col-4">
-                                    <img src="/public/img/icons/previous.png" alt="previous" class="icon"
-                                        @click="previousImage">
-                                </div>
-                                <div class="col-4 text-center align-self-center">
-                                    {{ position + 1 }} / {{ images.length }}
-                                </div>
-                                <div class="col-4 text-right p-0">
-                                    <img src="/public/img/icons/next.png" alt="previous" class="icon mr-2"
-                                        @click="nextImage">
-                                </div>
+            </div>
+            <div class="col-12">
+                <modal ref="modal">
+                    <template v-slot:bottom>
+                        <div class="row sticky-bottom">
+                            <div class="col-4">
+                                <img src="/public/img/icons/previous.png" alt="previous" class="icon"
+                                    @click="previousImage">
                             </div>
-                        </template>
-                    </modal>
-                </div>
+                            <div class="col-4 text-center align-self-center">
+                                {{ position + 1 }} / {{ images.length }}
+                            </div>
+                            <div class="col-4 text-right p-0">
+                                <img src="/public/img/icons/next.png" alt="previous" class="icon mr-2"
+                                    @click="nextImage">
+                            </div>
+                        </div>
+                    </template>
+                </modal>
             </div>
         </div>
     </div>
