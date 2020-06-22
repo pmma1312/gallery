@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css">
     <link rel="stylesheet" href="/public/css/base.css">
     <link rel="stylesheet" href="/public/css/modal.css">
+    <link rel="icon" href="/public/img/icons/icon.png">
     <style>
         .modalImage {
             max-height: 85vh !important;
@@ -59,10 +60,10 @@
             </div>
             <div class="col-12">
                 <img src="/public/img/icons/download.png" alt="download" title="Download Album"
-                    class="icon-modal m-1 mt-3" @click="downloadAlbum">
+                    class="icon-modal m-1 mt-3" @click="downloadAlbum" v-if="album.images.length > 0">
             </div>
             <div class="col-12">
-                <div class="row m-1">
+                <div class="row m-1" v-if="album.images.length > 0">
                     <div class="my-col" v-for="image in album.images">
                         <div class="card card-custom h-100">
                             <div class="card-body p-0 text-center">
@@ -72,6 +73,15 @@
                                         loading="lazy">
                                     <div class="magnifier"></div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-1" v-else>
+                    <div class="my-col">
+                        <div class="card card-custom h-100">
+                            <div class="card-body p-0 text-center">
+                               <h1>No images found😪</h1>
                             </div>
                         </div>
                     </div>

@@ -26,7 +26,7 @@ class Authentication {
 
     private static function writeLog() : void {
         $logger = Logger::getInstance();
-        $logger->write_log("unauthorized access on " . Route::getRequestRoute() , Logger::LOG_LEVEL_WARNING);
+        $logger->write_log("unauthorized access on " . Route::getRequestRoute(), Logger::LOG_LEVEL_WARNING);
     }
 
 }
