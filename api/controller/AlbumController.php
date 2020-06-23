@@ -95,7 +95,7 @@ class AlbumController {
 
             $data = [];
             $images = [];
-
+            
             if($result->num_rows > 0) {
 
                 while(($res = $result->fetch_array(MYSQLI_ASSOC)) != null) {
