@@ -88,10 +88,8 @@ class AlbumController {
         if($result->num_rows > 0) {
             $result = $result->fetch_array(MYSQLI_ASSOC);
 
-            print($result['password']);
-
-            if(!isset($_POST['password']) || is_null($result['password'])) {
-                if(is_null($result['password']) || password_verify($_POST['password'], $result['password'])) {
+            if(isset($_POST['password']) || is_null($result['password'])) {
+                if(is_null($result['password']) || (password_verify($_POST['password'], $result['password']))) {
                     $album = $result;
                      // Get images for album
                     $query = "SELECT image.id, image.path, DATE_FORMAT(image.uploaded_at, '%d.%m.%Y') AS uploaded_at FROM album LEFT JOIN image_to_album ON album.id = image_to_album.album_id LEFT JOIN image ON image_to_album.image_id = image.id WHERE image_to_album.album_id = " . $album['id'] . " AND album.deleted = 0 AND (image.deleted = 0 OR image.deleted IS NULL)";
@@ -113,6 +111,8 @@ class AlbumController {
                         "album" => $album,
                         "images" => $images
                     ];
+
+                    $response = DefaultHandler::responseOk("Successfully got data for album!", $data);
                 } else {
                     $response = DefaultHandler::unauthorizedAccess();
                 }
@@ -129,9 +129,11 @@ class AlbumController {
                 ],
                 "images" => []
             ];
+
+            $response = DefaultHandler::responseOk("Successfully got data for album!", $data);
         }
 
-        View::json(DefaultHandler::responseOk("Successfully got data for album!", $data));
+        View::json($response);
     }
 
     public static function update() {

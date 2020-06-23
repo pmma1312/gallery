@@ -29,10 +29,38 @@ const app = new Vue({
             })
             .catch(error => {
                 if(error.response.status == 401) {
-                    console.log("WORKING");
+                    Swal.fire({
+                        title: "This album is password protected!",
+                        text: "Enter the password to access it:",
+                        input: "password",
+                        showCancelButton: true,
+                        confirmButtonText: "Authorize",
+                        icon: "warning",
+                        preConfirm: (password) => {
+                            return { password: password };
+                        }
+                    })
+                    .then((result) => {
+                        if(result.value) {
+                            let formData = new FormData();
+                            formData.set("password", result.value.password);
+                            
+                            axios.post(`/api/album/${this.getAlbumName()}`, formData)
+                            .then(response => {
+                                this.album = response.data.data;
+                            })
+                            .catch(error => {
+                                Swal.fire(
+                                    "Error!",
+                                    "Invalid Password",
+                                    "error"
+                                ).then(() => {
+                                    window.location.replace("/albums");
+                                });
+                            });
+                        }
+                    });
                 } 
-
-                console.log(error);
             });
         },
         showModal(path) {

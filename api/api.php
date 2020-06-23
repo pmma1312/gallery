@@ -72,7 +72,7 @@ Route::post("/api/album/unprotect", function() {
     AlbumController::removePassword();
 });
 
-Route::get("/api/album/(.*?)+", function() {
+Route::multiple([ "GET", "POST" ], "/api/album/(.*?)+", function() {
     AlbumController::load();
 });
 
