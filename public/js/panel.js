@@ -220,7 +220,6 @@ const app = new Vue({
         editAlbum(name, id) {
             axios.get(`/api/album/${name}`)
             .then(response => {
-                // TODO: SAVE EDITED ALBUM
                 this.editId = id;
 
                 this.showAlbumModal();
@@ -381,10 +380,79 @@ const app = new Vue({
             });
         },
         unprotect(id) {
-            console.log(id);
+            let formData = new FormData();
+            formData.set("id", id);
+
+            axios.post("/api/album/unprotect", formData)
+            .then(response => {
+                Swal.fire(
+                    "Success!",
+                    "Successfully removed protection for your album!",
+                    "success"
+                );
+
+                var album_id = id;
+
+                this.albums.forEach((album, index) => {
+                    if(album.id == album_id) {
+                        this.albums[index].password = false;
+                    }
+                });
+            })
+            .catch(error => {
+                if(error.response) {
+                    Swal.fire(
+                        "Error!",
+                        error.response.data.message,
+                        "error"
+                    );
+                }
+            })
         },
         protect(id) {
-            console.log(id);
+            Swal.fire({
+                title: "Protect your Album?",
+                text: "Enter your password:",
+                input: "password",
+                showCancelButton: true,
+                confirmButtonText: "Submit",
+                preConfirm: (password) => {
+                    return { password: password };
+                }
+            })
+            .then((result) => {
+                if(result.value) {
+                    let formData = new FormData();
+                    formData.set("password", result.value.password);
+                    formData.set("id", id);
+
+                    axios.post("/api/album/protect", formData)
+                    .then(response => {
+                        Swal.fire(
+                            "Success!",
+                            "Your password has been added!",
+                            "success"
+                        );
+
+                        var album_id = id;
+
+                        this.albums.forEach((album, index) => {
+                            if(album.id == album_id) {
+                                this.albums[index].password = true;
+                            }
+                        });
+                    })
+                    .catch(error =>{ 
+                        if(error.response) {
+                            Swal.fire(
+                                "Error!",
+                                error.response.data.message,
+                                "error"
+                            );
+                        }
+                    });
+                }
+            });
         }
     },
     mounted() {

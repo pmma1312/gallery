@@ -147,12 +147,26 @@ class Album {
         return $isSaved;
     }
 
-    public function setPassword($password) : void {
+    public function setPassword($password) : bool {
+        $isSet = false;
+
         if(is_null($password)) {
             $this->password = "NULL";
+            $isSet = true;
         } else {
-            $this->password = password_hash($password, PASSWORD_ARGON2I);
-        }
+            if(strlen($password) > 2) {
+                if(strlen($password) < 32) {
+                    $this->password = password_hash($password, PASSWORD_ARGON2I);
+                    $isSet = true;
+                } else {
+                    array_push($this->errors, "The max. length for a password is 32 characters.");
+                }
+            } else {
+                array_push($this->errors, "The min. length for a password is 3 characters.");
+            }
+        } 
+
+        return $isSet;
     }
 
     public function getId() {

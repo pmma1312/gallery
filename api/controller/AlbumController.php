@@ -82,33 +82,43 @@ class AlbumController {
         $albumName = urldecode($conn->real_escape_string(str_replace("/api/album/", "", Route::getRequestRoute())));
 
         // Get album information
-        $query = "SELECT album.id, album.thumbnail_id, album.name, album.created_at FROM album WHERE album.deleted = 0 AND album.name = '" . $albumName . "'";
+        $query = "SELECT album.id, album.thumbnail_id, album.name, album.created_at, album.password FROM album WHERE album.deleted = 0 AND album.name = '" . $albumName . "'";
         $result = $conn->query($query);
 
         if($result->num_rows > 0) {
             $result = $result->fetch_array(MYSQLI_ASSOC);
-            $album = $result;
 
-            // Get images for album
-            $query = "SELECT image.id, image.path, DATE_FORMAT(image.uploaded_at, '%d.%m.%Y') AS uploaded_at FROM album LEFT JOIN image_to_album ON album.id = image_to_album.album_id LEFT JOIN image ON image_to_album.image_id = image.id WHERE image_to_album.album_id = " . $album['id'] . " AND album.deleted = 0 AND (image.deleted = 0 OR image.deleted IS NULL)";
-            $result = $conn->query($query);
+            print($result['password']);
 
-            $data = [];
-            $images = [];
-            
-            if($result->num_rows > 0) {
+            if(!isset($_POST['password']) || is_null($result['password'])) {
+                if(is_null($result['password']) || password_verify($_POST['password'], $result['password'])) {
+                    $album = $result;
+                     // Get images for album
+                    $query = "SELECT image.id, image.path, DATE_FORMAT(image.uploaded_at, '%d.%m.%Y') AS uploaded_at FROM album LEFT JOIN image_to_album ON album.id = image_to_album.album_id LEFT JOIN image ON image_to_album.image_id = image.id WHERE image_to_album.album_id = " . $album['id'] . " AND album.deleted = 0 AND (image.deleted = 0 OR image.deleted IS NULL)";
+                    $result = $conn->query($query);
 
-                while(($res = $result->fetch_array(MYSQLI_ASSOC)) != null) {
-                    if(!is_null($res['id']))
-                        array_push($images, $res);
+                    $data = [];
+                    $images = [];
+                    
+                    if($result->num_rows > 0) {
+
+                        while(($res = $result->fetch_array(MYSQLI_ASSOC)) != null) {
+                            if(!is_null($res['id']))
+                                array_push($images, $res);
+                        }
+
+                    }
+
+                    $data = [
+                        "album" => $album,
+                        "images" => $images
+                    ];
+                } else {
+                    $response = DefaultHandler::unauthorizedAccess();
                 }
-
+            } else {
+                $response = DefaultHandler::unauthorizedAccess();
             }
-
-            $data = [
-                "album" => $album,
-                "images" => $images
-            ];
         } else {
             $data = [
                 "album" => [
@@ -163,6 +173,50 @@ class AlbumController {
             }
         } else {
             $response = DefaultHandler::badRequest("Missing post data.");
+        }
+
+        View::json($response);
+    }
+
+    public static function addPassword() {
+        if(isset($_POST['password'])) {
+            self::addOrRemovePassword(1, $_POST['password']);
+        } else {
+            View::json(DefaultHandler::badRequest("Post data missing!"));
+        }
+    }
+
+    public static function removePassword() {
+        self::addOrRemovePassword(0, null);
+    }
+
+    private static function addOrRemovePassword(int $type, $password) {
+        $response = DefaultHandler::unableToProccessRequest();
+        
+        if(isset($_POST['id'])) {
+            $album = new Album(null, null, null, $_POST['id']);
+
+            if($album->exists()) {
+                if($album->getUserId() == Auth::getTokenVar("uid")) {
+                    if($album->setPassword($password)) {
+                        if($album->savePassword()) {
+                            $response = DefaultHandler::responseOk("Successfully changed the protection state of the album", [
+                                "data" => [
+                                    "password" => (bool) $type
+                                ]
+                            ]); 
+                        }
+                    } else {
+                        $response = DefaultHandler::badRequest(implode("\n", $album->getErrors()));
+                    }
+                } else {
+                    $response = DefaultHandler::badRequest("You can't edit albums that aren't owned by you!");
+                }
+            } else {
+                $response = DefaultHandler::badRequest("Invalid album id!");
+            }
+        } else {
+            $response = DefaultHandler::badRequest("Post data missing!");
         }
 
         View::json($response);

@@ -28,6 +28,10 @@ const app = new Vue({
                 this.album = response.data.data;
             })
             .catch(error => {
+                if(error.response.status == 401) {
+                    console.log("WORKING");
+                } 
+
                 console.log(error);
             });
         },

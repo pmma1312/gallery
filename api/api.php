@@ -64,6 +64,14 @@ Route::put("/api/image/([0-9]+)/([0-9]+)", function() {
     ImageController::changeVisibility();
 }, "Authentication::isAuthenticatedJson");
 
+Route::post("/api/album/protect", function() {
+    AlbumController::addPassword();
+});
+
+Route::post("/api/album/unprotect", function() {
+    AlbumController::removePassword();
+});
+
 Route::get("/api/album/(.*?)+", function() {
     AlbumController::load();
 });
