@@ -44,6 +44,10 @@ class Image {
         $extension = pathinfo($this->file['name'], PATHINFO_EXTENSION);
         $filepath = sha1(microtime()) . "." . $extension;
 
+        if(!is_dir($basepath)) {
+            mkdir($basepath);
+        }
+
         if(move_uploaded_file($this->file['tmp_name'], $basepath . $filepath)) {
             $query = sprintf("INSERT INTO image(user_id, path) VALUES(%d, '%s')", $this->user_id, $filepath);
 
