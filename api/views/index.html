@@ -8,25 +8,81 @@
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/css/base.css">
     <link rel="icon" href="/public/img/icons/icon.png">
+    <style>
+        .img-full {
+            width: 100%;
+            height: 40vh;
+            background-image: url("/public/img/bg/epic.jpg");
+            background-position: top;
+            background-attachment: fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border-radius: .5rem;
+        }
+
+        .img-full, .bg-very-dark {
+            -webkit-box-shadow: 0px 1px 15px 2px rgba(0,0,0,0.75);
+            -moz-box-shadow: 0px 1px 15px 2px rgba(0,0,0,0.75);
+            box-shadow: 0px 1px 15px 2px rgba(0,0,0,0.75);
+        }
+
+        .bg-very-dark {
+            background-color: rgb(50, 56, 61);
+        }
+
+        .card-custom {
+            margin: 12px;
+        }
+
+        .link-highlight {
+            color: rgba(113, 113, 255, 0.575) !important;
+        }
+    </style>
 </head>
 <body class="bg-dark">
     <div class="container-fluid" id="root">
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-12">
                 <navbar></navbar>
             </div>
             <div class="col-12">
                 <h1 class="display-4 mt-3">Welcome to pGallery!</h1>
             </div>
-            <div class="col-12">
-                
+            <div class="col-12 mt-3">
+                <div class="jumbotron mb-4 bg-very-dark">
+                    <h2>Easily access and manage your images from all over the world!</h2>
+                    <p class="m-0 text-muted">We here at pGallery put all our efforts into making the best possible user experience for photography fans on any device.</p>
+                </div>
+                <div class="img-full mb-4"></div>
+                <div class="card bg-dark">
+                    <div class="card-header">
+                        <h2>FAQ</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="my-col">
+                                <div class="card card-custom">
+                                    <div class="card-header">
+                                        <h3>What Services Does This Site Offer?</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="m-2">The main focus of our service is to provide you an easy way to manage and access your most precious pictures from anywhere in the world!</p>
+                                    </div>
+                                </div>
+                                <div class="card card-custom">
+                                    <div class="card-header">
+                                        <h3>How Do I Register?</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="m-2">Start your journey now by paying a visit to the <a href="/register" class="link-highlight">register</a> page and sign up using your prefeered user data. Don't worry about your password, we don't store any of your passwords in clear text. During the registration your password is being sent through a complex set of hashing algorithms, to ensure the security of your password, even on the unlikely case of a data breach.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <footer style="position: fixed; bottom: 0; left: 0; background-color: rgba(255, 255, 255, 0.1); margin:0; width: 100vw;">
-            <p class="text-white m-0 p-2">
-                &copy; 2020 pGallery
-            </p>
-        </footer>
     </div>
     <script src="/public/js/lib/vue.js"></script>
     <script src="/public/js/index.js" type="module"></script>

@@ -379,6 +379,12 @@ const app = new Vue({
                     console.log(error.response);
                 }
             });
+        },
+        unprotect(id) {
+            console.log(id);
+        },
+        protect(id) {
+            console.log(id);
         }
     },
     mounted() {

@@ -137,6 +137,9 @@
                                                         @click="editAlbum(album.name, album.id)">
                                                         Edit
                                                     </button>
+                                                    <button class="btn" :class="[ (album.password) ? 'btn-danger' : 'btn-success' ]" v-on:click="(album.password) ? unprotect(album.id) : protect(album.id)">
+                                                        {{ (album.password) ? "Unprotect" : "Protect" }}
+                                                    </button>
                                                     <button class="btn btn-danger" @click="deleteAlbum(album.id)">
                                                         Delete
                                                     </button>

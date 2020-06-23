@@ -29,6 +29,7 @@ CREATE TABLE album (
     user_id INT NOT NULL,
     thumbnail_id INT NOT NULL,
     name VARCHAR(24) NOT NULL,
+    password VARCHAR(256) NULL,
     deleted TINYINT(1) DEFAULT 0 NOT NULL,
     created_at TIMESTAMP NOT NULL,
     PRIMARY KEY(id),
@@ -37,6 +38,8 @@ CREATE TABLE album (
     FOREIGN KEY(thumbnail_id) REFERENCES image(id)
     ON DELETE RESTRICT ON UPDATE CASCADE
 );
+
+-- ALTER TABLE album ADD COLUMN password VARCHAR(256) NULL;
 
 CREATE TABLE image_to_album (
     album_id INT NOT NULL,

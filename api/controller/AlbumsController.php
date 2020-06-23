@@ -17,7 +17,7 @@ class AlbumsController {
         if(is_numeric($limit) && is_numeric($offset)) {
             $conn = Database::getInstance()->getConn();
 
-            $query = "SELECT album.name, DATE_FORMAT(album.created_at, '%d.%m.%Y') AS created_at, user.username, image.path AS thumbnail FROM album JOIN user ON album.user_id = user.id JOIN image ON album.thumbnail_id = image.id WHERE album.deleted = 0 ORDER BY album.id DESC LIMIT " . $limit . " OFFSET " . $offset;
+            $query = "SELECT album.name, DATE_FORMAT(album.created_at, '%d.%m.%Y') AS created_at, user.username, image.path AS thumbnail FROM album JOIN user ON album.user_id = user.id JOIN image ON album.thumbnail_id = image.id WHERE album.deleted = 0 AND album.password IS NULL ORDER BY album.id DESC LIMIT " . $limit . " OFFSET " . $offset;
 
             $result = $conn->query($query);
 
@@ -43,13 +43,14 @@ class AlbumsController {
 
     public static function loadUserAlbums() {
         $conn = Database::getInstance()->getConn();
-        $query = "SELECT album.id, album.name, DATE_FORMAT(album.created_at, '%d.%m.%Y') AS created_at, COUNT(image_to_album.image_id) AS images FROM album LEFT JOIN image_to_album ON album.id = image_to_album.album_id LEFT JOIN image ON image_to_album.image_id = image.id WHERE album.deleted = 0 AND album.user_id = " . Auth::getTokenVar("uid") . " AND (image.deleted = 0 OR image.deleted IS NULL) GROUP BY album.id ORDER BY album.id DESC";
+        $query = "SELECT album.id, album.name, DATE_FORMAT(album.created_at, '%d.%m.%Y') AS created_at, COUNT(image_to_album.image_id) AS images, album.password FROM album LEFT JOIN image_to_album ON album.id = image_to_album.album_id LEFT JOIN image ON image_to_album.image_id = image.id WHERE album.deleted = 0 AND album.user_id = " . Auth::getTokenVar("uid") . " AND (image.deleted = 0 OR image.deleted IS NULL) GROUP BY album.id ORDER BY album.id DESC";
         $result = $conn->query($query);
 
         $data = [];
 
         if($result->num_rows > 0) {
             while(($res = $result->fetch_array(MYSQLI_ASSOC)) != null) {
+                $res['password'] = (bool) (!is_null($res['password']));
                 array_push($data, $res);
             }
         }

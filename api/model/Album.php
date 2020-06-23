@@ -7,6 +7,7 @@ class Album {
     private $user_id;
     private $thumbnail_id;
     private $name;
+    private $password;
     private $errors = [];
 
     public function __construct($user_id, $name, $thumbnail_id, $id = null) {
@@ -34,6 +35,7 @@ class Album {
             $this->id = $result['id'];
             $this->user_id = $result['user_id'];
             $this->name = $result['name'];
+            $this->password = $result['password'];
         } else {
             $this->id = null;
         }
@@ -127,6 +129,30 @@ class Album {
     public function addImageToAlbum($image_id) : void {
         $imageToAlbum = new ImageToAlbum($this->id, $image_id);
         $imageToAlbum->save();
+    }
+
+    public function savePassword() : bool {
+        $isSaved = false;
+
+        if($this->password == "NULL") {
+            $query = "UPDATE album SET password = NULL WHERE id = " . $this->id;
+        } else {
+            $query = "UPDATE album SET password = '" . $this->password . "' WHERE id = " . $this->id; 
+        }
+
+        if($this->conn->query($query)) {
+            $isSaved = true;
+        }
+
+        return $isSaved;
+    }
+
+    public function setPassword($password) : void {
+        if(is_null($password)) {
+            $this->password = "NULL";
+        } else {
+            $this->password = password_hash($password, PASSWORD_ARGON2I);
+        }
     }
 
     public function getId() {
