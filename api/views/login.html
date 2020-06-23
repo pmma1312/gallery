@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/css/base.css">
     <link rel="icon" href="/public/img/icons/icon.png">
+    <style>
+        @media (max-width: 1000px) {
+            .w-50 {
+                width: 100% !important;
+                margin-top: 128px;
+            }
+        }
+    </style>
 </head>
 <body class="bg-dark">
     <div class="container-fluid" id="root">
@@ -17,7 +25,7 @@
                 <navbar></navbar>
             </div>
             <div class="col-12 d-flex align-items-center justify-content-center" style="height: 90vh;">
-                <div class="card bg-dark mx-auto w-50">
+                <div class="card bg-dark mx-auto w-50 mb-2">
                     <div class="card-header">
                         <h1 class="display-4">Login</h1>
                     </div>
@@ -34,7 +42,7 @@
                             <p class="text-muted">
                                 Not registered yet? <a href="/register">Register now!</a>
                             </p>
-                            <input type="submit" value="Login" class="form-control bg-dark w-25">
+                            <input type="submit" value="Login" class="form-control bg-dark">
                         </form>
                     </div>
                 </div>
