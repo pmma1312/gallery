@@ -71,7 +71,7 @@ class Image {
                             $ressource = imagecreatefromgif($path);
                             break;
                         default:
-                            die();
+                            return $isSaved;
                             break;
                     }
         
@@ -88,7 +88,6 @@ class Image {
                             imagegif($ressource, $path);
                             break;
                         default:
-                            die();
                             break;
                     }        
                 }
