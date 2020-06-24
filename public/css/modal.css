@@ -4,7 +4,6 @@
 
 .out-enter, .out-leave-to {
     opacity: 0;
-    filter: blur(8px);
 }
 
 .image-modal {
