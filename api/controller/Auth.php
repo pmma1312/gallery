@@ -70,7 +70,12 @@ class Auth {
     }
 
     public static function getTokenPayload() {
-        return Token::getPayload(self::getToken(), Config::TOKEN_SECRET);
+        $token = self::getToken();
+
+        if($token)
+            return Token::getPayload($token, Config::TOKEN_SECRET);
+        else
+            return null;
     }
 
     public static function getTokenVar(string $name) {

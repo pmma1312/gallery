@@ -82,14 +82,14 @@ class AlbumController {
         $albumName = urldecode($conn->real_escape_string(str_replace("/api/album/", "", Route::getRequestRoute())));
 
         // Get album information
-        $query = "SELECT album.id, album.thumbnail_id, album.name, album.created_at, album.password FROM album WHERE album.deleted = 0 AND album.name = '" . $albumName . "'";
+        $query = "SELECT album.id, album.user_id, album.thumbnail_id, album.name, album.created_at, album.password FROM album WHERE album.deleted = 0 AND album.name = '" . $albumName . "'";
         $result = $conn->query($query);
 
         if($result->num_rows > 0) {
             $result = $result->fetch_array(MYSQLI_ASSOC);
 
-            if(isset($_POST['password']) || is_null($result['password'])) {
-                if(is_null($result['password']) || (password_verify($_POST['password'], $result['password']))) {
+            if(isset($_POST['password']) || is_null($result['password']) || $result['user_id'] == Auth::getTokenVar("uid")) {
+                if(is_null($result['password']) || $result['user_id'] == Auth::getTokenVar("uid") || (password_verify($_POST['password'], $result['password']))) {
                     $album = $result;
                      // Get images for album
                     $query = "SELECT image.id, image.path, DATE_FORMAT(image.uploaded_at, '%d.%m.%Y') AS uploaded_at FROM album LEFT JOIN image_to_album ON album.id = image_to_album.album_id LEFT JOIN image ON image_to_album.image_id = image.id WHERE image_to_album.album_id = " . $album['id'] . " AND album.deleted = 0 AND (image.deleted = 0 OR image.deleted IS NULL)";
