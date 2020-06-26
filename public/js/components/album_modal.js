@@ -28,6 +28,11 @@ export default {
         },
         setThumbnail(thumbnail) {
             this.thumbnail = thumbnail;
+        },
+        keydown(e) {
+            if(e.keyCode == 27) { // Close Modal On ESC Key
+                this.hideModal();
+            }
         }
     },
     template: `
@@ -62,5 +67,6 @@ export default {
     `,
     mounted() {
         this.loadImages();
+        document.addEventListener("keydown", this.keydown);
     }
 };
