@@ -100,11 +100,11 @@ class Album {
 
         $rows = [];
 
-        if(!is_null($data['thumbnail'])) {
-            array_push($rows, "thumbnail_id = " . $data['thumbnail']);
+        if(!is_null($data['thumbnail']) && is_numeric($data['thumbnail'])) {
+            array_push($rows, "thumbnail_id = " . $this->conn->real_escape_string($data['thumbnail']));
         }
 
-        array_push($rows, "name = '" . $data['name'] . "'");
+        array_push($rows, "name = '" . $this->conn->real_escape_string($data['name']) . "'");
 
         $query = sprintf("UPDATE album SET %s WHERE id = %d", implode(",", $rows), $this->id);
 
