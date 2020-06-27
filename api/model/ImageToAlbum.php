@@ -5,7 +5,6 @@ class ImageToAlbum {
     private $conn;
     private $album_id;
     private $image_id;
-    private $user_id;
 
     public function __construct($album_id, $image_id) {
         $this->conn = Database::getInstance()->getConn();
