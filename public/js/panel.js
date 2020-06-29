@@ -27,13 +27,17 @@ const app = new Vue({
                 axios.get(`/api/user/images/${this.limit}/${this.offset}`)
                 .then(response => {
                     if(response.data.data) {
-                        response.data.data.forEach(item => {
+                        response.data.data.forEach((item, index) => {
                             let exists = this.images.find((x) => {
                                 return x.id == item.id;
                             });
                             
                             if(!exists) {
-                                this.images.push(item);
+                                let delay = index * 300;
+
+                                setTimeout(() => {
+                                    this.images.push(item);
+                                }, delay);
                             }
                         });
 
