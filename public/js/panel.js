@@ -34,11 +34,7 @@ const app = new Vue({
                             });
                             
                             if(!exists) {
-                                let delay = index * 300;
-
-                                setTimeout(() => {
-                                    this.images.push(item);
-                                }, delay);
+                                this.images.push(item);
                             }
                         });
 
