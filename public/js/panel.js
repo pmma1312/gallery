@@ -28,6 +28,7 @@ const app = new Vue({
                 .then(response => {
                     if(response.data.data) {
                         response.data.data.forEach((item, index) => {
+                            // We do this to avoid adding images multiple times to the images array
                             let exists = this.images.find((x) => {
                                 return x.id == item.id;
                             });
