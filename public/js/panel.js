@@ -254,57 +254,69 @@ const app = new Vue({
 
             let formData = new FormData();
 
-            if(this.$refs.files.files.length < 10) {
+            if(this.$refs.files.files.length < 11) {
+                const post_max_size = 52428800; // Has to be adjusted depending on php configuration
+                let filessize = 0;
+
                 for(let i = 0; i < this.$refs.files.files.length; i++) {
                     formData.append("files[]", this.$refs.files.files[i]);
+                    filessize += this.$refs.files.files[i].size;
                 }
+
+                if(filessize < post_max_size) {
+                    axios.post("/api/files/upload", formData, {
+                        headers: { 'Content-Type': 'multipart/form-data' },
+                        onUploadProgress: (e) => {
+                            Swal.fire({
+                                title: '',
+                                html: `
+                                <img src='/public/img/icons/loading.gif' style='width: 128px; height: auto;'>
+                                <p>Please wait while we upload your images...</p>
+                                `,
+                                showConfirmButton: false,
+                                allowOutsideClick: false
+                            });
+                        }
+                    })
+                    .then(response => {
+                        if(response.data.data.errors && response.data.data.errors > 0) {
+                            Swal.fire(
+                                "Warning!",
+                                response.data.data.errors.join("<br>"),
+                                "warning"
+                            );
+                        } else {
+                            Swal.fire(
+                                "Success!",
+                                response.data.message,
+                                "success"
+                            );  
+                        }
     
-                axios.post("/api/files/upload", formData, {
-                    headers: { 'Content-Type': 'multipart/form-data' },
-                    onUploadProgress: (e) => {
-                        Swal.fire({
-                            title: '',
-                            html: `
-                            <img src='/public/img/icons/loading.gif' style='width: 128px; height: auto;'>
-                            <p>Please wait while we upload your images...</p>
-                            `,
-                            showConfirmButton: false,
-                            allowOutsideClick: false
-                        });
-                    }
-                })
-                .then(response => {
-                    if(response.data.data.errors && response.data.data.errors > 0) {
-                        Swal.fire(
-                            "Warning!",
-                            response.data.data.errors.join("<br>"),
-                            "warning"
-                        );
-                    } else {
-                        Swal.fire(
-                            "Success!",
-                            response.data.message,
-                            "success"
-                        );  
-                    }
-
-                    // Prepend fresh uploaded images to images array
-                    if(response.data.data.images) {
-                        this.images = response.data.data.images.concat(this.images);
-                        this.$refs.albummodal.images = this.images;
-                    }
-
-                    e.target.reset();
-                })
-                .catch(error => {
-                    if(error.response) {
-                        Swal.fire(
-                            "Error!",
-                            error.response.data.message,
-                            "error"
-                        );
-                    }
-                });
+                        // Prepend fresh uploaded images to images array
+                        if(response.data.data.images) {
+                            this.images = response.data.data.images.concat(this.images);
+                            this.$refs.albummodal.images = this.images;
+                        }
+    
+                        e.target.reset();
+                    })
+                    .catch(error => {
+                        if(error.response) {
+                            Swal.fire(
+                                "Error!",
+                                error.response.data.message,
+                                "error"
+                            );
+                        }
+                    });
+                } else {
+                    Swal.fire(
+                        "Error",
+                        `All of your files may not be bigger than ${Math.ceil(post_max_size / (1024*1024))}mb`,
+                        "error"
+                    );
+                }
             } else {
                 Swal.fire(
                     "Warning!",
@@ -343,12 +355,10 @@ const app = new Vue({
         },
         infinityScroll() {
             if(this.$refs.imagesContainer) {
-                this.$refs.imagesContainer.onscroll = () => {
-                    let bottomOfDiv = this.$refs.imagesContainer.scrollTop + this.$refs.imagesContainer.clientHeight ===  this.$refs.imagesContainer.scrollHeight;
-    
-                    if (bottomOfDiv) {
-                        this.loadImages();
-                    }
+                let bottomOfDiv = Math.ceil(this.$refs.imagesContainer.scrollTop) + this.$refs.imagesContainer.clientHeight ==  this.$refs.imagesContainer.scrollHeight;
+                
+                if (bottomOfDiv) {
+                    this.loadImages();
                 }
             }
         },
@@ -458,6 +468,5 @@ const app = new Vue({
     mounted() {
         this.loadImages();
         this.loadAlbums();
-        this.infinityScroll();
     }
 });

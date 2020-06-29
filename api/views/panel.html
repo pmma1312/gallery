@@ -160,7 +160,7 @@
                                 <div class="card-header">
                                     <h4>My Images</h4>
                                 </div>
-                                <div class="card-body my-images" ref="imagesContainer" :class="(images.length < 1) ? 'p-0' : 'p-3'">
+                                <div class="card-body my-images" ref="imagesContainer" :class="(images.length < 1) ? 'p-0' : 'p-3'" @scroll="infinityScroll">
                                     <transition-group name="fade" tag="div" class="row d-flex">
                                         <div class="my-col" v-for="image in images" v-bind:key="image.id">
                                             <div class="card bg-dark h-100">
