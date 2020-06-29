@@ -41,7 +41,7 @@ const app = new Vue({
         },
         inifintyScroll() {
             window.onscroll = () => {
-                let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+                let bottomOfWindow = Math.ceil(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight;
             
                 if (bottomOfWindow) {
                     this.loadAlbums();
