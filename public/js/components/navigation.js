@@ -10,35 +10,30 @@ export default {
                     route: "/",
                     icon: "/public/img/icons/home.png",
                     auth: false,
-                    alt: "home"
                 },
                 {
                     name: "Albums",
                     route: "/albums",
                     icon: "/public/img/icons/albums.png",
                     auth: false,
-                    alt: "album"
                 },
                 {
                     name: "Images",
                     route: "/images",
                     icon: "/public/img/icons/images.png",
                     auth: false,
-                    alt: "images"
                 },
                 {
                     name: "Panel",
                     route: "/panel",
                     icon: "/public/img/icons/panel.png",
                     auth: false,
-                    alt: "panel"
                 },
                 {
                     name: "Logout",
                     route: "/logout",
                     icon: "/public/img/icons/logout.png",
                     auth: true,
-                    alt: "logout"
                 }
             ]
         }
@@ -72,7 +67,7 @@ export default {
                        :href="(site.route != activeSite) ? site.route : '#'"  
                        :title="site.name" class="nav item nav-link">
                         <img :src="site.icon" class="icon-navbar"
-                             :class="{ active: activeSite == site.route }" :alt="site.alt">
+                             :class="{ active: activeSite == site.route }" :alt="site.name">
                     </a>
                 </ul>
             </div>
